@@ -11,6 +11,7 @@ import "primeflex/primeflex.css";
 
 //core
 import "primereact/resources/primereact.min.css";
+import Store from "@/components/Store";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   // eslint-disable-next-line
@@ -25,5 +26,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  return <PrimeReactProvider>{getLayout(<Component {...pageProps} />)}</PrimeReactProvider>;
+  return (
+    <Store>
+      <PrimeReactProvider>{getLayout(<Component {...pageProps} />)}</PrimeReactProvider>
+    </Store>
+  );
 }

@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
@@ -6,6 +7,8 @@ import { useEffect, useState } from "react";
 const Objects = ({ appData }: { appData: any }) => {
   const [search, setSearch] = useState("");
   const [filteredAppData, setFilteredAppData] = useState(appData.application.objects);
+
+  const router = useRouter();
 
   useEffect(() => {
     const filterAppData = () => {
@@ -53,7 +56,7 @@ const Objects = ({ appData }: { appData: any }) => {
       onRowSelect={(e) => {
         const objectKey = e.data.key;
 
-        location.replace(`/${appData.application.id}/objects/${objectKey}`);
+        router.push(`/${appData.application.id}/objects/${objectKey}`);
       }}>
       <Column field="name" header="Name"></Column>
       <Column field="key" header="Key"></Column>

@@ -17,7 +17,6 @@ const Home: NextPageWithLayout = () => {
             Welcome to <span className="purple">KnackLens</span>
           </h2>
           <p>Use this tool to view metadata for any Knack application</p>
-
           <AppSearch />
         </div>
       </main>

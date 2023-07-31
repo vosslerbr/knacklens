@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { NextPageWithLayout } from "./_app";
+import { NextPageWithLayout } from "../_app";
 import Layout from "@/components/Layout";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -37,10 +37,10 @@ const AppView: NextPageWithLayout = () => {
       }
     };
 
-    if (id) {
+    if (id && !appData) {
       handleSearch();
     }
-  }, [id, setAppData]);
+  }, [id, setAppData, appData]);
 
   return (
     <>

@@ -95,6 +95,10 @@ div.scenes div {
   font-size: 3rem;
 }
 
+#intro p {
+  font-size: 1.5rem;
+}
+
 #intro h2,
 #intro p {
   margin-bottom: 2rem;

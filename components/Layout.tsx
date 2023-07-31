@@ -1,35 +1,18 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { Menubar } from "primereact/menubar";
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
+import AppSearch from "./AppSearch";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [knackAppId, setKnackAppId] = useState("");
-
   const start = (
     <Link href="/">
       <h1>KnackLens</h1>
     </Link>
   );
-  const end = (
-    <>
-      <InputText
-        placeholder="Enter a Knack App ID"
-        type="text"
-        className="w-15rem"
-        value={knackAppId}
-        onChange={(e) => setKnackAppId(e.target.value)}
-      />
-      <Link href={`/${knackAppId}`}>
-        <Button label="Go" onClick={() => setKnackAppId("")} />
-      </Link>
-    </>
-  );
 
   return (
     <>
-      <Menubar start={start} end={end} />
+      <Menubar start={start} end={AppSearch} />
       {children}
       <footer>
         <div id="footer-inner">

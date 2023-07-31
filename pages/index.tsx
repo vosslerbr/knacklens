@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { NextPageWithLayout } from "./_app";
-import Layout from "@/components/Layout";
-import { ReactElement } from "react";
+import AppSearch from "@/components/AppSearch";
 
 const Home: NextPageWithLayout = () => {
   return (
@@ -14,14 +13,12 @@ const Home: NextPageWithLayout = () => {
       </Head>
       <main id="intro">
         <div>
-          <h2>
+          <h2 id="intro-heading">
             Welcome to <span className="purple">KnackLens</span>
           </h2>
-          <p>
-            Use this tool to view metadata such as Objects, Fields, Scenes, and Views for any Knack
-            application.
-          </p>
-          <p className="callout">Enter a Knack App ID to get started</p>
+          <p>Use this tool to view metadata for any Knack application</p>
+
+          <AppSearch />
         </div>
       </main>
     </>

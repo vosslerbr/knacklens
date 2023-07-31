@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import { useContext } from "react";
-import { AppIdContext } from "./Store";
+import { useContext, useState } from "react";
+import { AppIdContext, KnackIDContext } from "./Store";
 
 const AppSearch = () => {
-  const knackAppId = useContext(AppIdContext);
-  const setKnackAppId = useContext(AppIdContext);
+  const { knackAppId, setKnackAppId } = useContext(AppIdContext) as KnackIDContext;
+
+  const [inputValue, setInputValue] = useState<string>("");
 
   return (
     <>
@@ -14,12 +15,14 @@ const AppSearch = () => {
         placeholder="Enter a Knack App ID"
         type="text"
         className="w-15rem"
-        value={knackAppId}
-        onChange={(e) => setKnackAppId(e.target.value)}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
       />
-      <Link href={`/${knackAppId}`}>
-        <Button label="Go" onClick={() => setKnackAppId("")} />
+      <Link href={`/${inputValue}`}>
+        <Button label="Go" onClick={() => setKnackAppId(inputValue)} />
       </Link>
     </>
   );
 };
+
+export default AppSearch;

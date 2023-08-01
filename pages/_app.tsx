@@ -7,6 +7,7 @@ import "../styles/globals.css";
 
 //theme
 import "primereact/resources/themes/vela-purple/theme.css";
+
 import "primeflex/primeflex.css";
 
 //core

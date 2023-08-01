@@ -10,9 +10,9 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Card } from "primereact/card";
 
-const ObjectDetail: NextPageWithLayout = () => {
+const SceneDetail: NextPageWithLayout = () => {
   // get the id from the url
-  const objectKey = useRouter().query.key as string;
+  const sceneKey = useRouter().query.key as string;
   const appId = useRouter().query.id as string;
 
   const router = useRouter();
@@ -59,80 +59,56 @@ const ObjectDetail: NextPageWithLayout = () => {
         {!loading && appData ? (
           <div className="card">
             <h2 id="app-name">{appData?.appName}</h2>
-            <h2 className="detail-title purple">{appData.objectsByKey[objectKey].name}</h2>
+            <h2 className="detail-title purple">{appData.scenesByKey[sceneKey].name}</h2>
             <div className="grid metadata">
               <Card title="Key">
-                <p>{appData.objectsByKey[objectKey].key}</p>
+                <p>{appData.scenesByKey[sceneKey].key}</p>
               </Card>
-              <Card title="Identifier">
-                <p>{appData.objectsByKey[objectKey].identifier}</p>
+              <Card title="Slug">
+                <p>{appData.scenesByKey[sceneKey].slug}</p>
               </Card>
-              <Card title="Records">
-                <p>{appData.objectsByKey[objectKey].count.toLocaleString()}</p>
+              <Card title="Parent Slug">
+                <p>{appData.scenesByKey[sceneKey].parent}</p>
               </Card>
-              <Card title="Sort Field">
-                <p>{appData.objectsByKey[objectKey].sort.field}</p>
+              <Card title="Display in Menu">
+                <p>{appData.scenesByKey[sceneKey].page_menu_display ? "Yes" : "No"}</p>
               </Card>
-              <Card title="Sort Order">
-                <p>{appData.objectsByKey[objectKey].sort.order}</p>
+              <Card title="Open in Modal">
+                <p>{appData.scenesByKey[sceneKey].modal ? "Yes" : "No"}</p>
               </Card>
             </div>
             <DataTable
               className="mb-6 mt-6"
-              value={appData.objectsByKey[objectKey].connections.outbound}
-              header="Outbound Connections"
-              emptyMessage="No outbound connections"
+              value={appData.scenesByKey[sceneKey].rules}
+              header="Page Rules"
+              emptyMessage="No rules"
               scrollable
               scrollHeight="750px"
               selectionMode="single"
               onRowSelect={(e) => {
                 const objectKey = e.data.object;
 
-                router.push(`/${appData.id}/objects/${objectKey}`);
+                console.log("objectKey: ", objectKey);
               }}>
-              <Column field="name" header="Name"></Column>
-              <Column field="key" header="Field"></Column>
-              <Column field="object" header="To"></Column>
-              <Column field="belongs_to" header="Belongs To"></Column>
-              <Column field="has" header="Has"></Column>
+              <Column field="action" header="Action"></Column>
             </DataTable>
+
             <DataTable
-              className="mb-6"
-              value={appData.objectsByKey[objectKey].connections.inbound}
-              header="Inbound Connections"
-              emptyMessage="No inbound connections"
+              className="mb-6 mt-6"
+              value={appData.scenesByKey[sceneKey].views}
+              header="Views"
+              emptyMessage="No views"
               scrollable
               scrollHeight="750px"
               selectionMode="single"
               onRowSelect={(e) => {
                 const objectKey = e.data.object;
 
-                router.push(`/${appData.id}/objects/${objectKey}`);
-              }}>
-              <Column field="name" header="Name"></Column>
-              <Column field="key" header="Field"></Column>
-              <Column field="object" header="From"></Column>
-              <Column field="belongs_to" header="Belongs To"></Column>
-              <Column field="has" header="Has"></Column>
-            </DataTable>
-            <DataTable
-              className="mb-6"
-              value={appData.objectsByKey[objectKey].fields}
-              header="Fields"
-              emptyMessage="No fields"
-              scrollable
-              scrollHeight="750px"
-              selectionMode="single"
-              onRowSelect={(e) => {
-                const fieldKey = e.data.key;
-
-                console.log("fieldKey: ", fieldKey);
+                console.log("objectKey: ", objectKey);
               }}>
               <Column field="name" header="Name"></Column>
               <Column field="key" header="Key"></Column>
               <Column field="type" header="Type"></Column>
-              <Column field="required" header="Required"></Column>
-              <Column field="unique" header="Unique"></Column>
             </DataTable>
           </div>
         ) : (
@@ -143,8 +119,8 @@ const ObjectDetail: NextPageWithLayout = () => {
   );
 };
 
-ObjectDetail.getLayout = function getLayout(page: ReactElement) {
+SceneDetail.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
 
-export default ObjectDetail;
+export default SceneDetail;

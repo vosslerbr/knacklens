@@ -24,8 +24,4 @@ const Home: NextPageWithLayout = () => {
   );
 };
 
-// Home.getLayout = function getLayout(page: ReactElement) {
-//   return <Layout>{page}</Layout>;
-// };
-
 export default Home;

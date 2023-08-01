@@ -66,11 +66,20 @@ h2 {
   margin-bottom: 2rem;
 }
 
+.detail-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
 div.grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-gap: 2rem;
   margin-top: 2rem;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 div.metadata div {

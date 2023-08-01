@@ -10,6 +10,7 @@ import Metadata from "@/components/Metadata";
 import Objects from "@/components/Objects";
 import Scenes from "@/components/Scenes";
 import { AppContext, AppDataContext } from "@/components/Store";
+import Tasks from "@/components/Tasks";
 
 const AppView: NextPageWithLayout = () => {
   // get the id from the url
@@ -25,7 +26,7 @@ const AppView: NextPageWithLayout = () => {
       try {
         setLoading(true);
 
-        const { data } = await axios.get(`https://api.knack.com/v1/applications/${id}`);
+        const { data } = await axios.get(`/api/app-data?id=${id}`);
 
         console.log("HELLO: ", data);
 
@@ -45,7 +46,7 @@ const AppView: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>KnackLens | {appData?.application?.name}</title>
+        <title>KnackLens | {appData?.appName}</title>
         <meta name="description" content="Easily view Knack application metadata" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -53,7 +54,7 @@ const AppView: NextPageWithLayout = () => {
       <main>
         {!loading && appData ? (
           <div className="card">
-            <h2 id="app-name">{appData?.application?.name}</h2>
+            <h2 id="app-name">{appData?.appName}</h2>
             <TabView>
               <TabPanel header="Metadata">
                 <Metadata appData={appData} />
@@ -71,7 +72,7 @@ const AppView: NextPageWithLayout = () => {
                 <p>VIEWS TODO</p>
               </TabPanel>
               <TabPanel header="Tasks">
-                <p>TASKS TODO</p>
+                <Tasks appData={appData} />
               </TabPanel>
             </TabView>
           </div>

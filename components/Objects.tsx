@@ -3,16 +3,17 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
+import { KnackAppData } from "./Store";
 
-const Objects = ({ appData }: { appData: any }) => {
+const Objects = ({ appData }: { appData: KnackAppData }) => {
   const [search, setSearch] = useState("");
-  const [filteredAppData, setFilteredAppData] = useState(appData.application.objects);
+  const [filteredAppData, setFilteredAppData] = useState(appData.objects);
 
   const router = useRouter();
 
   useEffect(() => {
     const filterAppData = () => {
-      const filteredObjects = appData.application.objects.filter((object: any) => {
+      const filteredObjects = appData.objects.filter((object: any) => {
         return (
           object.name.toLowerCase().includes(search.trim().toLowerCase()) ||
           object.key.toLowerCase().includes(search.trim().toLowerCase())
@@ -29,9 +30,7 @@ const Objects = ({ appData }: { appData: any }) => {
 
   const header = (
     <div className="flex flex-wrap align-items-center justify-content-between gap-2">
-      <span className="text-xl text-900 font-bold">
-        {appData.application.objects.length} Total Objects
-      </span>
+      <span className="text-xl text-900 font-bold">{appData.objectCount} Total Objects</span>
       <InputText
         placeholder="Search by name or key"
         type="text"
@@ -43,7 +42,7 @@ const Objects = ({ appData }: { appData: any }) => {
   );
 
   const getRecords = (object: any) => {
-    return appData.application.counts[object.key].toLocaleString();
+    return appData.recordCounts[object.key].toLocaleString();
   };
 
   return (
@@ -56,7 +55,7 @@ const Objects = ({ appData }: { appData: any }) => {
       onRowSelect={(e) => {
         const objectKey = e.data.key;
 
-        router.push(`/${appData.application.id}/objects/${objectKey}`);
+        router.push(`/${appData.id}/objects/${objectKey}`);
       }}>
       <Column field="name" header="Name"></Column>
       <Column field="key" header="Key"></Column>

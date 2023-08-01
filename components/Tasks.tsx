@@ -5,24 +5,24 @@ import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
 import { KnackAppData } from "./Store";
 
-const Scenes = ({ appData }: { appData: KnackAppData }) => {
+const Tasks = ({ appData }: { appData: KnackAppData }) => {
   const [search, setSearch] = useState("");
-  const [filteredAppData, setFilteredAppData] = useState(appData.scenes);
+  const [filteredAppData, setFilteredAppData] = useState(appData.tasks);
 
   const router = useRouter();
 
   useEffect(() => {
     const filterAppData = () => {
-      const filteredScenes = appData.scenes.filter((scene: any) => {
+      const filteredTasks = appData.tasks.filter((task: any) => {
         return (
-          scene.name.toLowerCase().includes(search.trim().toLowerCase()) ||
-          scene.key.toLowerCase().includes(search.trim().toLowerCase())
+          task.name.toLowerCase().includes(search.trim().toLowerCase()) ||
+          task.key.toLowerCase().includes(search.trim().toLowerCase())
         );
       });
 
-      console.log("FILTERED scenes: ", filteredScenes);
+      console.log("FILTERED tasks: ", filteredTasks);
 
-      setFilteredAppData(filteredScenes);
+      setFilteredAppData(filteredTasks);
     };
 
     filterAppData();
@@ -30,7 +30,7 @@ const Scenes = ({ appData }: { appData: KnackAppData }) => {
 
   const header = (
     <div className="flex flex-wrap align-items-center justify-content-between gap-2">
-      <span className="text-xl text-900 font-bold">{appData.sceneCount} Total Scenes</span>
+      <span className="text-xl text-900 font-bold">{appData.tasks.length} Total Tasks</span>
       <InputText
         placeholder="Search by name or key"
         type="text"
@@ -49,16 +49,19 @@ const Scenes = ({ appData }: { appData: KnackAppData }) => {
       scrollHeight="750px"
       selectionMode="single"
       onRowSelect={(e) => {
-        const sceneKey = e.data.key;
+        const taskKey = e.data.key;
 
-        router.push(`/${appData.id}/scenes/${sceneKey}`);
+        router.push(`/${appData.id}/tasks/${taskKey}`);
       }}>
       <Column field="name" header="Name"></Column>
       <Column field="key" header="Key"></Column>
-      <Column field="slug" header="Slug"></Column>
-      <Column field="views.length" header="Views"></Column>
+      <Column field="object_key" header="Object"></Column>
+      <Column field="scheduled" header="Scheduled"></Column>
+      <Column field="run_status" header="Running"></Column>
+      <Column field="schedule.time" header="Time"></Column>
+      <Column field="schedule.repeat" header="Repeats"></Column>
     </DataTable>
   );
 };
 
-export default Scenes;
+export default Tasks;

@@ -1,41 +1,40 @@
 import { Card } from "primereact/card";
 import { Tag } from "primereact/tag";
+import { KnackAppData } from "./Store";
 
-const Metadata = ({ appData }: { appData: any }) => {
-  const { application } = appData;
-
+const Metadata = ({ appData }: { appData: KnackAppData }) => {
   return (
     <div className="grid metadata">
       <Card title="Slug">
-        <p>{application.slug}</p>
+        <p>{appData.appSlug}</p>
       </Card>
       <Card title="Home Scene">
-        <p>{application.home_scene.key}</p>
+        <p>{appData.homeSceneKey}</p>
       </Card>
       <Card title="Home Slug">
-        <p>{application.home_scene.slug}</p>
+        <p>{appData.homeSlug}</p>
       </Card>
       <Card title="# of Objects">
-        <p>{application.objects.length.toLocaleString()}</p>
+        <p>{appData.objectCount.toLocaleString()}</p>
       </Card>
       <Card title="# of Scenes">
-        <p>{application.scenes.length.toLocaleString()}</p>
+        <p>{appData.sceneCount.toLocaleString()}</p>
       </Card>
       <Card title="API Limit">
-        <p>{application.account.plan_limits.api_limit.toLocaleString()} requests</p>
+        <p>{appData.apiLimit.toLocaleString()} requests</p>
       </Card>
       <Card title="E-commerce">
-        {application.ecommerce.enabled ? (
+        {appData.ecommerceEnabled ? (
           <Tag value="Enabled" severity="success" />
         ) : (
           <Tag value="Disabled" severity="danger" />
         )}
       </Card>
       <Card title="Timezone">
-        <p>{application.settings.timezone}</p>
+        <p>{appData.appTimezone}</p>
       </Card>
       <Card title="Users">
-        {application.users.enabled ? (
+        {appData.usersEnabled ? (
           <Tag value="Enabled" severity="success" />
         ) : (
           <Tag value="Disabled" severity="danger" />

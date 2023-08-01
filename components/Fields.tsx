@@ -5,24 +5,24 @@ import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
 import { KnackAppData } from "./Store";
 
-const Tasks = ({ appData }: { appData: KnackAppData }) => {
+const Fields = ({ appData }: { appData: KnackAppData }) => {
   const [search, setSearch] = useState("");
-  const [filteredAppData, setFilteredAppData] = useState(appData.tasks);
+  const [filteredAppData, setFilteredAppData] = useState(appData.fields);
 
   const router = useRouter();
 
   useEffect(() => {
     const filterAppData = () => {
-      const filteredTasks = appData.tasks.filter((task: any) => {
+      const filteredFields = appData.fields.filter((field: any) => {
         return (
-          task.name.toLowerCase().includes(search.trim().toLowerCase()) ||
-          task.key.toLowerCase().includes(search.trim().toLowerCase())
+          field.name.toLowerCase().includes(search.trim().toLowerCase()) ||
+          field.key.toLowerCase().includes(search.trim().toLowerCase())
         );
       });
 
-      console.log("FILTERED tasks: ", filteredTasks);
+      console.log("FILTERED fields: ", filteredFields);
 
-      setFilteredAppData(filteredTasks);
+      setFilteredAppData(filteredFields);
     };
 
     filterAppData();
@@ -30,7 +30,7 @@ const Tasks = ({ appData }: { appData: KnackAppData }) => {
 
   const header = (
     <div className="flex flex-wrap align-items-center justify-content-between gap-2">
-      <span className="text-xl text-900 font-bold">{appData.tasks.length} Total Tasks</span>
+      <span className="text-xl text-900 font-bold">{appData.fields.length} Total Fields</span>
       <InputText
         placeholder="Search by name or key"
         type="text"
@@ -45,24 +45,23 @@ const Tasks = ({ appData }: { appData: KnackAppData }) => {
     <DataTable
       value={filteredAppData}
       header={header}
-      emptyMessage="No tasks"
+      emptyMessage="No fields"
       scrollable
       scrollHeight="750px"
       selectionMode="single"
       onRowSelect={(e) => {
-        const taskKey = e.data.key;
+        const fieldKey = e.data.key;
 
-        router.push(`/${appData.id}/tasks/${taskKey}`);
+        router.push(`/${appData.id}/fields/${fieldKey}`);
       }}>
       <Column field="name" header="Name"></Column>
       <Column field="key" header="Key"></Column>
       <Column field="object_key" header="Object"></Column>
-      <Column field="scheduled" header="Scheduled"></Column>
-      <Column field="run_status" header="Running"></Column>
-      <Column field="schedule.time" header="Time"></Column>
-      <Column field="schedule.repeat" header="Repeats"></Column>
+      <Column field="type" header="Type"></Column>
+      <Column field="required" header="Required"></Column>
+      <Column field="unique" header="Unique"></Column>
     </DataTable>
   );
 };
 
-export default Tasks;
+export default Fields;

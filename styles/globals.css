@@ -108,6 +108,13 @@ div.scenes div {
   font-size: 1.5rem;
 }
 
+.detail-p {
+  font-size: 1.25rem;
+  text-align: center;
+  font-weight: bolder;
+  font-style: italic;
+}
+
 #intro h2,
 #intro p {
   margin-bottom: 2rem;

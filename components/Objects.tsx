@@ -49,6 +49,7 @@ const Objects = ({ appData }: { appData: KnackAppData }) => {
     <DataTable
       value={filteredAppData}
       header={header}
+      emptyMessage="No objects"
       scrollable
       scrollHeight="750px"
       selectionMode="single"

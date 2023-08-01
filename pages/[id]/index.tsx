@@ -1,16 +1,17 @@
-import Head from "next/head";
-import { NextPageWithLayout } from "../_app";
 import Layout from "@/components/Layout";
-import { ReactElement, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import axios from "axios";
-import { TabView, TabPanel } from "primereact/tabview";
-import { ProgressSpinner } from "primereact/progressspinner";
 import Metadata from "@/components/Metadata";
 import Objects from "@/components/Objects";
+import PageLoading from "@/components/PageLoading";
 import Scenes from "@/components/Scenes";
 import { AppContext, AppDataContext } from "@/components/Store";
 import Tasks from "@/components/Tasks";
+import axios from "axios";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { TabPanel, TabView } from "primereact/tabview";
+import { ReactElement, useContext, useEffect, useState } from "react";
+import { NextPageWithLayout } from "../_app";
+import Fields from "@/components/Fields";
 
 const AppView: NextPageWithLayout = () => {
   // get the id from the url
@@ -63,7 +64,7 @@ const AppView: NextPageWithLayout = () => {
                 <Objects appData={appData} />
               </TabPanel>
               <TabPanel header="Fields">
-                <p>FIELDS TODO</p>
+                <Fields appData={appData} />
               </TabPanel>
               <TabPanel header="Scenes">
                 <Scenes appData={appData} />
@@ -77,7 +78,7 @@ const AppView: NextPageWithLayout = () => {
             </TabView>
           </div>
         ) : (
-          <ProgressSpinner />
+          <PageLoading />
         )}
       </main>
     </>

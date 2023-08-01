@@ -1,14 +1,14 @@
 import Layout from "@/components/Layout";
+import PageLoading from "@/components/PageLoading";
 import { AppContext, AppDataContext } from "@/components/Store";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { ProgressSpinner } from "primereact/progressspinner";
+import { Card } from "primereact/card";
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../../_app";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import { Card } from "primereact/card";
 
 const ObjectDetail: NextPageWithLayout = () => {
   // get the id from the url
@@ -136,7 +136,7 @@ const ObjectDetail: NextPageWithLayout = () => {
             </DataTable>
           </div>
         ) : (
-          <ProgressSpinner />
+          <PageLoading />
         )}
       </main>
     </>

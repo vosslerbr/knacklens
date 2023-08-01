@@ -45,6 +45,7 @@ const Scenes = ({ appData }: { appData: KnackAppData }) => {
     <DataTable
       value={filteredAppData}
       header={header}
+      emptyMessage="No scenes"
       scrollable
       scrollHeight="750px"
       selectionMode="single"

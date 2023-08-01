@@ -10,9 +10,9 @@ import { DataTable } from "primereact/datatable";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../../_app";
 
-const SceneDetail: NextPageWithLayout = () => {
+const FieldDetail: NextPageWithLayout = () => {
   // get the id from the url
-  const sceneKey = useRouter().query.key as string;
+  const fieldKey = useRouter().query.key as string;
   const appId = useRouter().query.id as string;
 
   const router = useRouter();
@@ -29,7 +29,7 @@ const SceneDetail: NextPageWithLayout = () => {
 
         const { data } = await axios.get(`/api/app-data?id=${appId}`);
 
-        console.log("HELLO: ", data);
+        console.log("fieldsByKey: ", data.fieldsByKey);
 
         setAppData(data);
       } catch (error) {
@@ -59,27 +59,28 @@ const SceneDetail: NextPageWithLayout = () => {
         {!loading && appData ? (
           <div className="card">
             <h2 id="app-name">{appData?.appName}</h2>
-            <h2 className="detail-title purple">{appData.scenesByKey[sceneKey].name}</h2>
+            <h2 className="detail-title purple">{appData.fieldsByKey[fieldKey].name}</h2>
+            {/* <p className="detail-p">Field</p> */}
             <div className="grid metadata">
               <Card title="Key">
-                <p>{appData.scenesByKey[sceneKey].key}</p>
+                <p>{appData.fieldsByKey[fieldKey].key}</p>
               </Card>
-              <Card title="Slug">
-                <p>{appData.scenesByKey[sceneKey].slug}</p>
+              <Card title="Type">
+                <p>{appData.fieldsByKey[fieldKey].type}</p>
               </Card>
-              <Card title="Parent Slug">
-                <p>{appData.scenesByKey[sceneKey].parent}</p>
+              <Card title="Object">
+                <p>{appData.fieldsByKey[fieldKey].object_key}</p>
               </Card>
-              <Card title="Display in Menu">
-                <p>{appData.scenesByKey[sceneKey].page_menu_display ? "Yes" : "No"}</p>
+              <Card title="Required">
+                <p>{appData.fieldsByKey[fieldKey].required ? "Yes" : "No"}</p>
               </Card>
-              <Card title="Open in Modal">
-                <p>{appData.scenesByKey[sceneKey].modal ? "Yes" : "No"}</p>
+              <Card title="Unique">
+                <p>{appData.fieldsByKey[fieldKey].unique ? "Yes" : "No"}</p>
               </Card>
             </div>
-            <DataTable
+            {/* <DataTable
               className="mb-6 mt-6"
-              value={appData.scenesByKey[sceneKey].rules}
+              value={appData.fieldsByKey[fieldKey].rules}
               header="Page Rules"
               emptyMessage="No rules"
               scrollable
@@ -91,25 +92,7 @@ const SceneDetail: NextPageWithLayout = () => {
                 console.log("objectKey: ", objectKey);
               }}>
               <Column field="action" header="Action"></Column>
-            </DataTable>
-
-            <DataTable
-              className="mb-6 mt-6"
-              value={appData.scenesByKey[sceneKey].views}
-              header="Views"
-              emptyMessage="No views"
-              scrollable
-              scrollHeight="750px"
-              selectionMode="single"
-              onRowSelect={(e) => {
-                const objectKey = e.data.object;
-
-                console.log("objectKey: ", objectKey);
-              }}>
-              <Column field="name" header="Name"></Column>
-              <Column field="key" header="Key"></Column>
-              <Column field="type" header="Type"></Column>
-            </DataTable>
+            </DataTable> */}
           </div>
         ) : (
           <PageLoading />
@@ -119,8 +102,8 @@ const SceneDetail: NextPageWithLayout = () => {
   );
 };
 
-SceneDetail.getLayout = function getLayout(page: ReactElement) {
+FieldDetail.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
 
-export default SceneDetail;
+export default FieldDetail;

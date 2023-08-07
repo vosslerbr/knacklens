@@ -9,6 +9,7 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../../_app";
+import { SelectButton } from "primereact/selectbutton";
 
 const ObjectDetail: NextPageWithLayout = () => {
   // get the id from the url
@@ -19,6 +20,7 @@ const ObjectDetail: NextPageWithLayout = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [connectionTableShown, setConnectionTableShown] = useState("Outbound");
 
   const { appData, setAppData } = useContext(AppContext) as AppDataContext;
 
@@ -57,84 +59,102 @@ const ObjectDetail: NextPageWithLayout = () => {
       </Head>
       <main>
         {!loading && appData ? (
-          <div className="card">
-            <h2 id="app-name">{appData?.appName}</h2>
-            <h2 className="detail-title purple">{appData.objectsByKey[objectKey].name}</h2>
-            <div className="grid metadata">
-              <Card title="Key">
-                <p>{appData.objectsByKey[objectKey].key}</p>
-              </Card>
-              <Card title="Identifier">
-                <p>{appData.objectsByKey[objectKey].identifier}</p>
-              </Card>
-              <Card title="Records">
-                <p>{appData.objectsByKey[objectKey].count.toLocaleString()}</p>
-              </Card>
-              <Card title="Sort Field">
-                <p>{appData.objectsByKey[objectKey].sort.field}</p>
-              </Card>
-              <Card title="Sort Order">
-                <p>{appData.objectsByKey[objectKey].sort.order}</p>
-              </Card>
+          <>
+            <div className="card">
+              <h2 id="app-name">{appData?.appName}</h2>
+              <h2 className="detail-title purple">{appData.objectsByKey[objectKey].name}</h2>
+              <div className="grid metadata">
+                <Card title="Key">
+                  <p>{appData.objectsByKey[objectKey].key}</p>
+                </Card>
+                <Card title="Identifier">
+                  <p>{appData.objectsByKey[objectKey].identifier}</p>
+                </Card>
+                <Card title="Records">
+                  <p>{appData.objectsByKey[objectKey].count.toLocaleString()}</p>
+                </Card>
+                <Card title="Sort Field">
+                  <p>{appData.objectsByKey[objectKey]?.sort?.field || "None"}</p>
+                </Card>
+                <Card title="Sort Order">
+                  <p>{appData.objectsByKey[objectKey]?.sort?.order || "None"}</p>
+                </Card>
+              </div>
             </div>
-            <DataTable
-              className="mb-6 mt-6"
-              value={appData.objectsByKey[objectKey].connections.outbound}
-              header="Outbound Connections"
-              emptyMessage="No outbound connections"
-              scrollable
-              scrollHeight="750px"
-              selectionMode="single"
-              onRowSelect={(e) => {
-                const objectKey = e.data.object;
 
-                router.push(`/${appData.id}/objects/${objectKey}`);
-              }}>
-              <Column field="name" header="Name"></Column>
-              <Column field="key" header="Field"></Column>
-              <Column field="object" header="To"></Column>
-              <Column field="belongs_to" header="Belongs To"></Column>
-              <Column field="has" header="Has"></Column>
-            </DataTable>
-            <DataTable
-              className="mb-6"
-              value={appData.objectsByKey[objectKey].connections.inbound}
-              header="Inbound Connections"
-              emptyMessage="No inbound connections"
-              scrollable
-              scrollHeight="750px"
-              selectionMode="single"
-              onRowSelect={(e) => {
-                const objectKey = e.data.object;
+            <div className="card">
+              <h2 className="detail-title">Connections</h2>
 
-                router.push(`/${appData.id}/objects/${objectKey}`);
-              }}>
-              <Column field="name" header="Name"></Column>
-              <Column field="key" header="Field"></Column>
-              <Column field="object" header="From"></Column>
-              <Column field="belongs_to" header="Belongs To"></Column>
-              <Column field="has" header="Has"></Column>
-            </DataTable>
-            <DataTable
-              className="mb-6"
-              value={appData.objectsByKey[objectKey].fields}
-              header="Fields"
-              emptyMessage="No fields"
-              scrollable
-              scrollHeight="750px"
-              selectionMode="single"
-              onRowSelect={(e) => {
-                const fieldKey = e.data.key;
+              <div className="flex justify-content-center">
+                <SelectButton
+                  value={connectionTableShown}
+                  onChange={(e) => setConnectionTableShown(e.value)}
+                  options={["Outbound", "Inbound"]}
+                  className="mb-4"
+                />
+              </div>
 
-                console.log("fieldKey: ", fieldKey);
-              }}>
-              <Column field="name" header="Name"></Column>
-              <Column field="key" header="Key"></Column>
-              <Column field="type" header="Type"></Column>
-              <Column field="required" header="Required"></Column>
-              <Column field="unique" header="Unique"></Column>
-            </DataTable>
-          </div>
+              {connectionTableShown === "Inbound" ? (
+                <DataTable
+                  value={appData.objectsByKey[objectKey].connections.inbound}
+                  emptyMessage="No inbound connections"
+                  scrollable
+                  scrollHeight="750px"
+                  selectionMode="single"
+                  onRowSelect={(e) => {
+                    const objectKey = e.data.object;
+
+                    router.push(`/${appData.id}/objects/${objectKey}`);
+                  }}>
+                  <Column field="name" header="Name"></Column>
+                  <Column field="key" header="Field"></Column>
+                  <Column field="object" header="From"></Column>
+                  <Column field="belongs_to" header="Belongs To"></Column>
+                  <Column field="has" header="Has"></Column>
+                </DataTable>
+              ) : (
+                <DataTable
+                  value={appData.objectsByKey[objectKey].connections.outbound}
+                  emptyMessage="No outbound connections"
+                  scrollable
+                  scrollHeight="750px"
+                  selectionMode="single"
+                  onRowSelect={(e) => {
+                    const objectKey = e.data.object;
+
+                    router.push(`/${appData.id}/objects/${objectKey}`);
+                  }}>
+                  <Column field="name" header="Name"></Column>
+                  <Column field="key" header="Field"></Column>
+                  <Column field="object" header="To"></Column>
+                  <Column field="belongs_to" header="Belongs To"></Column>
+                  <Column field="has" header="Has"></Column>
+                </DataTable>
+              )}
+            </div>
+
+            <div className="card">
+              <h2 className="detail-title">Fields</h2>
+              <DataTable
+                className="mb-6"
+                value={appData.objectsByKey[objectKey].fields}
+                emptyMessage="No fields"
+                scrollable
+                scrollHeight="750px"
+                selectionMode="single"
+                onRowSelect={(e) => {
+                  const fieldKey = e.data.key;
+
+                  router.push(`/${appData.id}/fields/${fieldKey}`);
+                }}>
+                <Column field="name" header="Name"></Column>
+                <Column field="key" header="Key"></Column>
+                <Column field="type" header="Type"></Column>
+                <Column field="required" header="Required"></Column>
+                <Column field="unique" header="Unique"></Column>
+              </DataTable>
+            </div>
+          </>
         ) : (
           <PageLoading />
         )}

@@ -49,15 +49,17 @@ const Scenes = ({ appData }: { appData: KnackAppData }) => {
       scrollable
       scrollHeight="750px"
       selectionMode="single"
+      virtualScrollerOptions={{ itemSize: 46 }}
+      sortMode="multiple"
       onRowSelect={(e) => {
         const sceneKey = e.data.key;
 
         router.push(`/${appData.id}/scenes/${sceneKey}`);
       }}>
-      <Column field="name" header="Name"></Column>
-      <Column field="key" header="Key"></Column>
-      <Column field="slug" header="Slug"></Column>
-      <Column field="views.length" header="Views"></Column>
+      <Column field="name" header="Name" sortable></Column>
+      <Column field="key" header="Key" sortable></Column>
+      <Column field="slug" header="Slug" sortable></Column>
+      <Column field="views.length" header="Views" sortable></Column>
     </DataTable>
   );
 };

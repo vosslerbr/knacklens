@@ -49,18 +49,20 @@ const Tasks = ({ appData }: { appData: KnackAppData }) => {
       scrollable
       scrollHeight="750px"
       selectionMode="single"
+      virtualScrollerOptions={{ itemSize: 46 }}
+      sortMode="multiple"
       onRowSelect={(e) => {
         const taskKey = e.data.key;
 
         router.push(`/${appData.id}/tasks/${taskKey}`);
       }}>
-      <Column field="name" header="Name"></Column>
-      <Column field="key" header="Key"></Column>
-      <Column field="object_key" header="Object"></Column>
-      <Column field="scheduled" header="Scheduled"></Column>
-      <Column field="run_status" header="Running"></Column>
-      <Column field="schedule.time" header="Time"></Column>
-      <Column field="schedule.repeat" header="Repeats"></Column>
+      <Column field="name" header="Name" sortable></Column>
+      <Column field="key" header="Key" sortable></Column>
+      <Column field="object_key" header="Object" sortable></Column>
+      <Column field="scheduled" header="Scheduled" sortable></Column>
+      <Column field="run_status" header="Running" sortable></Column>
+      <Column field="schedule.time" header="Time" sortable></Column>
+      <Column field="schedule.repeat" header="Repeats" sortable></Column>
     </DataTable>
   );
 };

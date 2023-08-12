@@ -1,4 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { KnackAppData } from "@/components/Store";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -15,23 +16,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { data } = await axios.get(`https://api.knack.com/v1/applications/${appId}`);
 
   const rawAppData = data.application;
-
-  // format data to a more useful format
-  const appMetadata = {
-    id: rawAppData.id,
-    appName: rawAppData.name,
-    appDescription: rawAppData.description,
-    appSlug: rawAppData.slug,
-    homeSlug: rawAppData.home_scene.slug,
-    homeSceneKey: rawAppData.home_scene.key,
-    usersEnabled: rawAppData.users.enabled,
-    objectCount: rawAppData.objects.length,
-    sceneCount: rawAppData.scenes.length,
-    ecommerceEnabled: rawAppData.ecommerce.enabled,
-    apiLimit: rawAppData.account.plan_limits.api_limit,
-    appTimezone: rawAppData.settings.timezone,
-    recordCounts: rawAppData.counts,
-  };
 
   const objectsByKey = rawAppData.objects.reduce((acc: any, object: any) => {
     const count = rawAppData.counts[object.key];
@@ -78,9 +62,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   });
 
+  // format data to a more useful format
+
   // TODO rules
-  const formattedAppData = {
-    ...appMetadata,
+  const formattedAppData: KnackAppData = {
+    id: rawAppData.id,
+    appName: rawAppData.name,
+    appDescription: rawAppData.description,
+    appSlug: rawAppData.slug,
+    homeSlug: rawAppData.home_scene.slug,
+    homeSceneKey: rawAppData.home_scene.key,
+    usersEnabled: rawAppData.users.enabled,
+    objectCount: rawAppData.objects.length,
+    sceneCount: rawAppData.scenes.length,
+    ecommerceEnabled: rawAppData.ecommerce.enabled,
+    apiLimit: rawAppData.account.plan_limits.api_limit,
+    appTimezone: rawAppData.settings.timezone,
+    recordCounts: rawAppData.counts,
     objects: rawAppData.objects,
     objectsByKey,
     fields,

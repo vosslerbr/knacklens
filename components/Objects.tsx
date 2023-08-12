@@ -53,18 +53,20 @@ const Objects = ({ appData }: { appData: KnackAppData }) => {
       scrollable
       scrollHeight="750px"
       selectionMode="single"
+      virtualScrollerOptions={{ itemSize: 46 }}
+      sortMode="multiple"
       onRowSelect={(e) => {
         const objectKey = e.data.key;
 
         router.push(`/${appData.id}/objects/${objectKey}`);
       }}>
-      <Column field="name" header="Name"></Column>
-      <Column field="key" header="Key"></Column>
-      <Column field="fields.length" header="Fields"></Column>
-      <Column field="key" header="Records" body={getRecords}></Column>
-      <Column field="connections.inbound.length" header="Inbound Connections"></Column>
-      <Column field="connections.outbound.length" header="Outbound Connections"></Column>
-      <Column field="tasks.length" header="Tasks"></Column>
+      <Column field="name" header="Name" sortable></Column>
+      <Column field="key" header="Key" sortable></Column>
+      <Column field="fields.length" header="Fields" sortable></Column>
+      <Column field="key" header="Records" body={getRecords} sortable></Column>
+      <Column field="connections.inbound.length" header="Inbound Connections" sortable></Column>
+      <Column field="connections.outbound.length" header="Outbound Connections" sortable></Column>
+      <Column field="tasks.length" header="Tasks" sortable></Column>
     </DataTable>
   );
 };

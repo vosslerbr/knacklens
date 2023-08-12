@@ -101,16 +101,18 @@ const ObjectDetail: NextPageWithLayout = () => {
                   scrollable
                   scrollHeight="750px"
                   selectionMode="single"
+                  virtualScrollerOptions={{ itemSize: 46 }}
+                  sortMode="multiple"
                   onRowSelect={(e) => {
                     const objectKey = e.data.object;
 
                     router.push(`/${appData.id}/objects/${objectKey}`);
                   }}>
-                  <Column field="name" header="Name"></Column>
-                  <Column field="key" header="Field"></Column>
-                  <Column field="object" header="From"></Column>
-                  <Column field="belongs_to" header="Belongs To"></Column>
-                  <Column field="has" header="Has"></Column>
+                  <Column field="name" header="Name" sortable></Column>
+                  <Column field="key" header="Field" sortable></Column>
+                  <Column field="object" header="From" sortable></Column>
+                  <Column field="belongs_to" header="Belongs To" sortable></Column>
+                  <Column field="has" header="Has" sortable></Column>
                 </DataTable>
               ) : (
                 <DataTable
@@ -119,16 +121,18 @@ const ObjectDetail: NextPageWithLayout = () => {
                   scrollable
                   scrollHeight="750px"
                   selectionMode="single"
+                  virtualScrollerOptions={{ itemSize: 46 }}
+                  sortMode="multiple"
                   onRowSelect={(e) => {
                     const objectKey = e.data.object;
 
                     router.push(`/${appData.id}/objects/${objectKey}`);
                   }}>
-                  <Column field="name" header="Name"></Column>
-                  <Column field="key" header="Field"></Column>
-                  <Column field="object" header="To"></Column>
-                  <Column field="belongs_to" header="Belongs To"></Column>
-                  <Column field="has" header="Has"></Column>
+                  <Column field="name" header="Name" sortable></Column>
+                  <Column field="key" header="Field" sortable></Column>
+                  <Column field="object" header="To" sortable></Column>
+                  <Column field="belongs_to" header="Belongs To" sortable></Column>
+                  <Column field="has" header="Has" sortable></Column>
                 </DataTable>
               )}
             </div>
@@ -142,16 +146,18 @@ const ObjectDetail: NextPageWithLayout = () => {
                 scrollable
                 scrollHeight="750px"
                 selectionMode="single"
+                virtualScrollerOptions={{ itemSize: 46 }}
+                sortMode="multiple"
                 onRowSelect={(e) => {
                   const fieldKey = e.data.key;
 
                   router.push(`/${appData.id}/fields/${fieldKey}`);
                 }}>
-                <Column field="name" header="Name"></Column>
-                <Column field="key" header="Key"></Column>
-                <Column field="type" header="Type"></Column>
-                <Column field="required" header="Required"></Column>
-                <Column field="unique" header="Unique"></Column>
+                <Column field="name" header="Name" sortable></Column>
+                <Column field="key" header="Key" sortable></Column>
+                <Column field="type" header="Type" sortable></Column>
+                <Column field="required" header="Required" sortable></Column>
+                <Column field="unique" header="Unique" sortable></Column>
               </DataTable>
             </div>
           </>

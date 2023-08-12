@@ -85,12 +85,14 @@ const SceneDetail: NextPageWithLayout = () => {
               scrollable
               scrollHeight="750px"
               selectionMode="single"
+              sortMode="multiple"
+              virtualScrollerOptions={{ itemSize: 46 }}
               onRowSelect={(e) => {
                 const objectKey = e.data.object;
 
                 console.log("objectKey: ", objectKey);
               }}>
-              <Column field="action" header="Action"></Column>
+              <Column field="action" header="Action" sortable></Column>
             </DataTable>
 
             <DataTable
@@ -101,14 +103,16 @@ const SceneDetail: NextPageWithLayout = () => {
               scrollable
               scrollHeight="750px"
               selectionMode="single"
+              sortMode="multiple"
+              virtualScrollerOptions={{ itemSize: 46 }}
               onRowSelect={(e) => {
                 const objectKey = e.data.object;
 
                 console.log("objectKey: ", objectKey);
               }}>
-              <Column field="name" header="Name"></Column>
-              <Column field="key" header="Key"></Column>
-              <Column field="type" header="Type"></Column>
+              <Column field="name" header="Name" sortable></Column>
+              <Column field="key" header="Key" sortable></Column>
+              <Column field="type" header="Type" sortable></Column>
             </DataTable>
           </div>
         ) : (

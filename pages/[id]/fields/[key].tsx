@@ -91,7 +91,7 @@ const FieldDetail: NextPageWithLayout = () => {
 
                 console.log("objectKey: ", objectKey);
               }}>
-              <Column field="action" header="Action"></Column>
+              <Column field="action" header="Action" sortable></Column>
             </DataTable> */}
           </div>
         ) : (

@@ -10,6 +10,8 @@ import "primereact/resources/themes/vela-purple/theme.css";
 
 import "primeflex/primeflex.css";
 
+import "primeicons/primeicons.css";
+
 //core
 import "primereact/resources/primereact.min.css";
 import Store from "@/components/Store";

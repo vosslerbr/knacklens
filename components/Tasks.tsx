@@ -59,10 +59,24 @@ const Tasks = ({ appData }: { appData: KnackAppData }) => {
       <Column field="name" header="Name" sortable></Column>
       <Column field="key" header="Key" sortable></Column>
       <Column field="object_key" header="Object" sortable></Column>
-      <Column field="scheduled" header="Scheduled" sortable></Column>
-      <Column field="run_status" header="Running" sortable></Column>
       <Column field="schedule.time" header="Time" sortable></Column>
       <Column field="schedule.repeat" header="Repeats" sortable></Column>
+      <Column
+        field="scheduled"
+        header="Scheduled"
+        sortable
+        style={{ textAlign: "center" }}
+        body={(data: any) => (
+          <span>{data.scheduled ? <i className="pi pi-check"></i> : <></>}</span>
+        )}></Column>
+      <Column
+        field="run_status"
+        header="Running"
+        sortable
+        style={{ textAlign: "center" }}
+        body={(data: any) => (
+          <span>{data.run_status === "running" ? <i className="pi pi-check"></i> : <></>}</span>
+        )}></Column>
     </DataTable>
   );
 };

@@ -60,8 +60,30 @@ const Fields = ({ appData }: { appData: KnackAppData }) => {
       <Column field="key" header="Key" sortable></Column>
       <Column field="object_key" header="Object" sortable></Column>
       <Column field="type" header="Type" sortable></Column>
-      <Column field="required" header="Required" sortable></Column>
-      <Column field="unique" header="Unique" sortable></Column>
+      <Column
+        field="required"
+        header="Required"
+        sortable
+        style={{ textAlign: "center" }}
+        body={(data: any) => (
+          <span>{data.required ? <i className="pi pi-check"></i> : <></>}</span>
+        )}></Column>
+      <Column
+        field="unique"
+        header="Unique"
+        sortable
+        style={{ textAlign: "center" }}
+        body={(data: any) => (
+          <span>{data.unique ? <i className="pi pi-check"></i> : <></>}</span>
+        )}></Column>
+      <Column
+        field="validation"
+        header="Validation"
+        sortable
+        style={{ textAlign: "center" }}
+        body={(data: any) => (
+          <span>{data.validation ? <i className="pi pi-check"></i> : <></>}</span>
+        )}></Column>
     </DataTable>
   );
 };

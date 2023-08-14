@@ -49,6 +49,14 @@ const ObjectDetail: NextPageWithLayout = () => {
     }
   }, [appId, setAppData, appData]);
 
+  const renderConnectionType = (connection: any) => {
+    return (
+      <>
+        {connection.belongs_to} <i className="pi pi-arrow-right"></i> {connection.has}
+      </>
+    );
+  };
+
   return (
     <>
       <Head>
@@ -111,8 +119,7 @@ const ObjectDetail: NextPageWithLayout = () => {
                   <Column field="name" header="Name" sortable></Column>
                   <Column field="key" header="Field" sortable></Column>
                   <Column field="object" header="From" sortable></Column>
-                  <Column field="belongs_to" header="Belongs To" sortable></Column>
-                  <Column field="has" header="Has" sortable></Column>
+                  <Column field="type" header="Type" body={renderConnectionType}></Column>
                 </DataTable>
               ) : (
                 <DataTable
@@ -131,8 +138,7 @@ const ObjectDetail: NextPageWithLayout = () => {
                   <Column field="name" header="Name" sortable></Column>
                   <Column field="key" header="Field" sortable></Column>
                   <Column field="object" header="To" sortable></Column>
-                  <Column field="belongs_to" header="Belongs To" sortable></Column>
-                  <Column field="has" header="Has" sortable></Column>
+                  <Column field="type" header="Type" body={renderConnectionType}></Column>
                 </DataTable>
               )}
             </div>
@@ -156,8 +162,22 @@ const ObjectDetail: NextPageWithLayout = () => {
                 <Column field="name" header="Name" sortable></Column>
                 <Column field="key" header="Key" sortable></Column>
                 <Column field="type" header="Type" sortable></Column>
-                <Column field="required" header="Required" sortable></Column>
-                <Column field="unique" header="Unique" sortable></Column>
+                <Column
+                  field="required"
+                  header="Required"
+                  sortable
+                  style={{ textAlign: "center" }}
+                  body={(data: any) => (
+                    <span>{data.required ? <i className="pi pi-check"></i> : <></>}</span>
+                  )}></Column>
+                <Column
+                  field="unique"
+                  header="Unique"
+                  sortable
+                  style={{ textAlign: "center" }}
+                  body={(data: any) => (
+                    <span>{data.unique ? <i className="pi pi-check"></i> : <></>}</span>
+                  )}></Column>
               </DataTable>
             </div>
           </>

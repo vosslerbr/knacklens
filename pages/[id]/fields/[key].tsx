@@ -6,9 +6,10 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { Card } from "primereact/card";
 import { Column } from "primereact/column";
-import { DataTable } from "primereact/datatable";
+import { DataTable, DataTableExpandedRows, DataTableValueArray } from "primereact/datatable";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../../_app";
+import Link from "next/link";
 
 const FieldDetail: NextPageWithLayout = () => {
   // get the id from the url
@@ -19,6 +20,9 @@ const FieldDetail: NextPageWithLayout = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [expandedRows, setExpandedRows] = useState<
+    DataTableExpandedRows | DataTableValueArray | undefined
+  >(undefined);
 
   const { appData, setAppData } = useContext(AppContext) as AppDataContext;
 
@@ -47,6 +51,24 @@ const FieldDetail: NextPageWithLayout = () => {
     }
   }, [appId, setAppData, appData]);
 
+  const allowExpansion = (rowData: any) => {
+    return rowData.criteria.length > 0;
+  };
+
+  // TODO add typing
+  const rowExpansionTemplate = (data: any) => {
+    return (
+      <div className="p-3">
+        <h5>Criteria</h5>
+        <DataTable value={data.criteria}>
+          <Column field="field" header="Field" sortable></Column>
+          <Column field="operator" header="Operator" sortable></Column>
+          <Column field="value" header="Value" sortable></Column>
+        </DataTable>
+      </div>
+    );
+  };
+
   return (
     <>
       <Head>
@@ -68,9 +90,13 @@ const FieldDetail: NextPageWithLayout = () => {
               <Card title="Type">
                 <p>{appData.fieldsByKey[fieldKey].type}</p>
               </Card>
+
               <Card title="Object">
-                <p>{appData.fieldsByKey[fieldKey].object_key}</p>
+                <Link href={`/${appId}/objects/${appData.fieldsByKey[fieldKey].object_key}`}>
+                  <p>{appData.fieldsByKey[fieldKey].object_key}</p>
+                </Link>
               </Card>
+
               <Card title="Required">
                 <p>{appData.fieldsByKey[fieldKey].required ? "Yes" : "No"}</p>
               </Card>
@@ -78,21 +104,26 @@ const FieldDetail: NextPageWithLayout = () => {
                 <p>{appData.fieldsByKey[fieldKey].unique ? "Yes" : "No"}</p>
               </Card>
             </div>
-            {/* <DataTable
+
+            <DataTable
               className="mb-6 mt-6"
-              value={appData.fieldsByKey[fieldKey].rules}
-              header="Page Rules"
-              emptyMessage="No rules"
+              value={appData.fieldsByKey[fieldKey].validation}
+              header="Validation Rules"
+              emptyMessage="No validation rules"
               scrollable
               scrollHeight="750px"
               selectionMode="single"
+              expandedRows={expandedRows}
+              onRowToggle={(e) => setExpandedRows(e.data)}
+              rowExpansionTemplate={rowExpansionTemplate}
               onRowSelect={(e) => {
                 const objectKey = e.data.object;
 
                 console.log("objectKey: ", objectKey);
               }}>
-              <Column field="action" header="Action" sortable></Column>
-            </DataTable> */}
+              <Column expander={allowExpansion} style={{ width: "5rem" }} />
+              <Column field="message" header="Message" sortable></Column>
+            </DataTable>
           </div>
         ) : (
           <PageLoading />

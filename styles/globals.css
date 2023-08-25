@@ -86,6 +86,10 @@ div.metadata div {
   grid-column: span 3;
 }
 
+div.past-searches div {
+  grid-column: span 4;
+}
+
 div.objects div,
 div.scenes div {
   grid-column: span 12;
@@ -95,7 +99,6 @@ div.scenes div {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   text-align: center;
   height: calc(100vh - 8rem);
 }

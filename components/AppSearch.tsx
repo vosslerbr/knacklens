@@ -2,12 +2,15 @@ import Link from "next/link";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { useContext, useState } from "react";
-import { AppIdContext, KnackIDContext } from "./Store";
+import { AppContext, AppDataContext, AppIdContext, KnackIDContext } from "./Store";
 
 const AppSearch = () => {
   const { knackAppId, setKnackAppId } = useContext(AppIdContext) as KnackIDContext;
+  const { appData, setAppData } = useContext(AppContext) as AppDataContext;
 
   const [inputValue, setInputValue] = useState<string>("");
+
+
 
   return (
     <>

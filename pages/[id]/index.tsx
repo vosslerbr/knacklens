@@ -15,7 +15,9 @@ import Fields from "@/components/Fields";
 
 const AppView: NextPageWithLayout = () => {
   // get the id from the url
-  const { id } = useRouter().query;
+  const id = useRouter().query.id as string;
+
+  console.log("ID: ", id);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -30,8 +32,23 @@ const AppView: NextPageWithLayout = () => {
         const { data } = await axios.get(`/api/app-data?id=${id}`);
 
         console.log("HELLO: ", data);
-
         setAppData(data);
+
+        // check for local storage
+        const localData = localStorage.getItem("knackLens");
+
+        const localDataObj = localData ? JSON.parse(localData) : [];
+
+        const existingApp = localDataObj.find((app: any) => app.id === data?.id);
+
+        if (!existingApp) {
+          // add to local storage
+          localDataObj.push({ id: data?.id, appName: data?.appName });
+
+          console.log("localDataObj: ", localDataObj);
+
+          localStorage.setItem("knackLens", JSON.stringify(localDataObj));
+        }
       } catch (error) {
         console.error(error);
       } finally {
@@ -39,7 +56,7 @@ const AppView: NextPageWithLayout = () => {
       }
     };
 
-    if (id && !appData) {
+    if ((id && !appData) || id !== appData?.id) {
       handleSearch();
     }
   }, [id, setAppData, appData]);

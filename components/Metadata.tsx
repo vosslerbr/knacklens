@@ -1,45 +1,52 @@
-import { Card } from "primereact/card";
+import { Panel } from "primereact/panel";
 import { Tag } from "primereact/tag";
 import { KnackAppData } from "./Store";
 
 const Metadata = ({ appData }: { appData: KnackAppData }) => {
   return (
     <div className="grid metadata">
-      <Card title="Slug">
+      <Panel header="App Description">
+        <p>{appData.appDescription || "No description chosen"}</p>
+      </Panel>
+      <Panel header="Slug">
         <p>{appData.appSlug}</p>
-      </Card>
-      <Card title="Home Scene">
+      </Panel>
+      <Panel header="Home Scene">
         <p>{appData.homeSceneKey}</p>
-      </Card>
-      <Card title="Home Slug">
+      </Panel>
+      <Panel header="Home Slug">
         <p>{appData.homeSlug}</p>
-      </Card>
-      <Card title="# of Objects">
+      </Panel>
+      <Panel header="Objects">
         <p>{appData.objectCount.toLocaleString()}</p>
-      </Card>
-      <Card title="# of Scenes">
+      </Panel>
+      <Panel header="Total Records">
+        <p>{appData.recordCounts.total_entries.toLocaleString()}</p>
+      </Panel>
+      <Panel header="Scenes">
         <p>{appData.sceneCount.toLocaleString()}</p>
-      </Card>
-      <Card title="API Limit">
+      </Panel>
+      <Panel header="API Limit">
         <p>{appData.apiLimit.toLocaleString()} requests</p>
-      </Card>
-      <Card title="E-commerce">
+      </Panel>
+      <Panel header="Timezone">
+        <p>{appData.appTimezone}</p>
+      </Panel>
+      <Panel header="E-commerce">
         {appData.ecommerceEnabled ? (
           <Tag value="Enabled" severity="success" />
         ) : (
           <Tag value="Disabled" severity="danger" />
         )}
-      </Card>
-      <Card title="Timezone">
-        <p>{appData.appTimezone}</p>
-      </Card>
-      <Card title="Users">
+      </Panel>
+
+      <Panel header="Users">
         {appData.usersEnabled ? (
           <Tag value="Enabled" severity="success" />
         ) : (
           <Tag value="Disabled" severity="danger" />
         )}
-      </Card>
+      </Panel>
     </div>
   );
 };

@@ -4,12 +4,13 @@ import { AppContext, AppDataContext } from "@/components/Store";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../../_app";
 import { SelectButton } from "primereact/selectbutton";
+import { Panel } from "primereact/panel";
+import CheckOrX from "@/components/CheckOrX";
 
 const ObjectDetail: NextPageWithLayout = () => {
   // get the id from the url
@@ -72,21 +73,21 @@ const ObjectDetail: NextPageWithLayout = () => {
               <h2 id="app-name">{appData?.appName}</h2>
               <h2 className="detail-title purple">{appData.objectsByKey[objectKey].name}</h2>
               <div className="grid metadata">
-                <Card title="Key">
+                <Panel header="Key">
                   <p>{appData.objectsByKey[objectKey].key}</p>
-                </Card>
-                <Card title="Identifier">
+                </Panel>
+                <Panel header="Identifier">
                   <p>{appData.objectsByKey[objectKey].identifier}</p>
-                </Card>
-                <Card title="Records">
+                </Panel>
+                <Panel header="Records">
                   <p>{appData.objectsByKey[objectKey].count.toLocaleString()}</p>
-                </Card>
-                <Card title="Sort Field">
+                </Panel>
+                <Panel header="Sort Field">
                   <p>{appData.objectsByKey[objectKey]?.sort?.field || "None"}</p>
-                </Card>
-                <Card title="Sort Order">
+                </Panel>
+                <Panel header="Sort Order">
                   <p>{appData.objectsByKey[objectKey]?.sort?.order || "None"}</p>
-                </Card>
+                </Panel>
               </div>
             </div>
 
@@ -104,12 +105,12 @@ const ObjectDetail: NextPageWithLayout = () => {
 
               {connectionTableShown === "Inbound" ? (
                 <DataTable
+                  paginator
+                  rows={10}
+                  rowsPerPageOptions={[10, 25, 50]}
                   value={appData.objectsByKey[objectKey].connections.inbound}
                   emptyMessage="No inbound connections"
-                  scrollable
-                  scrollHeight="750px"
                   selectionMode="single"
-                  virtualScrollerOptions={{ itemSize: 46 }}
                   sortMode="multiple"
                   onRowSelect={(e) => {
                     const objectKey = e.data.object;
@@ -123,12 +124,12 @@ const ObjectDetail: NextPageWithLayout = () => {
                 </DataTable>
               ) : (
                 <DataTable
+                  paginator
+                  rows={10}
+                  rowsPerPageOptions={[10, 25, 50]}
                   value={appData.objectsByKey[objectKey].connections.outbound}
                   emptyMessage="No outbound connections"
-                  scrollable
-                  scrollHeight="750px"
                   selectionMode="single"
-                  virtualScrollerOptions={{ itemSize: 46 }}
                   sortMode="multiple"
                   onRowSelect={(e) => {
                     const objectKey = e.data.object;
@@ -146,13 +147,13 @@ const ObjectDetail: NextPageWithLayout = () => {
             <div className="card">
               <h2 className="detail-title">Fields</h2>
               <DataTable
+                paginator
+                rows={10}
+                rowsPerPageOptions={[10, 25, 50]}
                 className="mb-6"
                 value={appData.objectsByKey[objectKey].fields}
                 emptyMessage="No fields"
-                scrollable
-                scrollHeight="750px"
                 selectionMode="single"
-                virtualScrollerOptions={{ itemSize: 46 }}
                 sortMode="multiple"
                 onRowSelect={(e) => {
                   const fieldKey = e.data.key;
@@ -167,17 +168,13 @@ const ObjectDetail: NextPageWithLayout = () => {
                   header="Required"
                   sortable
                   style={{ textAlign: "center" }}
-                  body={(data: any) => (
-                    <span>{data.required ? <i className="pi pi-check"></i> : <></>}</span>
-                  )}></Column>
+                  body={(data: any) => <CheckOrX value={data.required} />}></Column>
                 <Column
                   field="unique"
                   header="Unique"
                   sortable
                   style={{ textAlign: "center" }}
-                  body={(data: any) => (
-                    <span>{data.unique ? <i className="pi pi-check"></i> : <></>}</span>
-                  )}></Column>
+                  body={(data: any) => <CheckOrX value={data.unique} />}></Column>
               </DataTable>
             </div>
           </>

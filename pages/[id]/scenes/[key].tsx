@@ -4,11 +4,11 @@ import { AppContext, AppDataContext } from "@/components/Store";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../../_app";
+import { Panel } from "primereact/panel";
 
 const SceneDetail: NextPageWithLayout = () => {
   // get the id from the url
@@ -61,32 +61,32 @@ const SceneDetail: NextPageWithLayout = () => {
             <h2 id="app-name">{appData?.appName}</h2>
             <h2 className="detail-title purple">{appData.scenesByKey[sceneKey].name}</h2>
             <div className="grid metadata">
-              <Card title="Key">
+              <Panel header="Key">
                 <p>{appData.scenesByKey[sceneKey].key}</p>
-              </Card>
-              <Card title="Slug">
+              </Panel>
+              <Panel header="Slug">
                 <p>{appData.scenesByKey[sceneKey].slug}</p>
-              </Card>
-              <Card title="Parent Slug">
+              </Panel>
+              <Panel header="Parent Slug">
                 <p>{appData.scenesByKey[sceneKey].parent}</p>
-              </Card>
-              <Card title="Display in Menu">
+              </Panel>
+              <Panel header="Display in Menu">
                 <p>{appData.scenesByKey[sceneKey].page_menu_display ? "Yes" : "No"}</p>
-              </Card>
-              <Card title="Open in Modal">
+              </Panel>
+              <Panel header="Open in Modal">
                 <p>{appData.scenesByKey[sceneKey].modal ? "Yes" : "No"}</p>
-              </Card>
+              </Panel>
             </div>
             <DataTable
+              paginator
+              rows={10}
+              rowsPerPageOptions={[10, 25, 50]}
               className="mb-6 mt-6"
               value={appData.scenesByKey[sceneKey].rules}
               header="Page Rules"
               emptyMessage="No rules"
-              scrollable
-              scrollHeight="750px"
               selectionMode="single"
               sortMode="multiple"
-              virtualScrollerOptions={{ itemSize: 46 }}
               onRowSelect={(e) => {
                 const objectKey = e.data.object;
 
@@ -96,15 +96,15 @@ const SceneDetail: NextPageWithLayout = () => {
             </DataTable>
 
             <DataTable
+              paginator
+              rows={10}
+              rowsPerPageOptions={[10, 25, 50]}
               className="mb-6 mt-6"
               value={appData.scenesByKey[sceneKey].views}
               header="Views"
               emptyMessage="No views"
-              scrollable
-              scrollHeight="750px"
               selectionMode="single"
               sortMode="multiple"
-              virtualScrollerOptions={{ itemSize: 46 }}
               onRowSelect={(e) => {
                 const objectKey = e.data.object;
 

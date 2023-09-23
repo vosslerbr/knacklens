@@ -4,6 +4,7 @@ import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
 import { KnackAppData } from "./Store";
+import CheckOrX from "./CheckOrX";
 
 const Tasks = ({ appData }: { appData: KnackAppData }) => {
   const [search, setSearch] = useState("");
@@ -43,13 +44,13 @@ const Tasks = ({ appData }: { appData: KnackAppData }) => {
 
   return (
     <DataTable
+      paginator
+      rows={10}
+      rowsPerPageOptions={[10, 25, 50]}
       value={filteredAppData}
       header={header}
       emptyMessage="No tasks"
-      scrollable
-      scrollHeight="750px"
       selectionMode="single"
-      virtualScrollerOptions={{ itemSize: 46 }}
       sortMode="multiple"
       onRowSelect={(e) => {
         const taskKey = e.data.key;
@@ -66,17 +67,13 @@ const Tasks = ({ appData }: { appData: KnackAppData }) => {
         header="Scheduled"
         sortable
         style={{ textAlign: "center" }}
-        body={(data: any) => (
-          <span>{data.scheduled ? <i className="pi pi-check"></i> : <></>}</span>
-        )}></Column>
+        body={(data: any) => <CheckOrX value={data.scheduled} />}></Column>
       <Column
         field="run_status"
         header="Running"
         sortable
         style={{ textAlign: "center" }}
-        body={(data: any) => (
-          <span>{data.run_status === "running" ? <i className="pi pi-check"></i> : <></>}</span>
-        )}></Column>
+        body={(data: any) => <CheckOrX value={data.run_status} />}></Column>
     </DataTable>
   );
 };

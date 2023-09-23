@@ -43,13 +43,13 @@ const Scenes = ({ appData }: { appData: KnackAppData }) => {
 
   return (
     <DataTable
+      paginator
+      rows={10}
+      rowsPerPageOptions={[10, 25, 50]}
       value={filteredAppData}
       header={header}
       emptyMessage="No scenes"
-      scrollable
-      scrollHeight="750px"
       selectionMode="single"
-      virtualScrollerOptions={{ itemSize: 46 }}
       sortMode="multiple"
       onRowSelect={(e) => {
         const sceneKey = e.data.key;

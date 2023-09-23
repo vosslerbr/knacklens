@@ -4,6 +4,7 @@ import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
 import { KnackAppData } from "./Store";
+import CheckOrX from "./CheckOrX";
 
 const Fields = ({ appData }: { appData: KnackAppData }) => {
   const [search, setSearch] = useState("");
@@ -43,13 +44,13 @@ const Fields = ({ appData }: { appData: KnackAppData }) => {
 
   return (
     <DataTable
+      paginator
+      rows={10}
+      rowsPerPageOptions={[10, 25, 50]}
       value={filteredAppData}
       header={header}
       emptyMessage="No fields"
-      scrollable
-      scrollHeight="750px"
       selectionMode="single"
-      virtualScrollerOptions={{ itemSize: 46 }}
       sortMode="multiple"
       onRowSelect={(e) => {
         const fieldKey = e.data.key;
@@ -65,25 +66,19 @@ const Fields = ({ appData }: { appData: KnackAppData }) => {
         header="Required"
         sortable
         style={{ textAlign: "center" }}
-        body={(data: any) => (
-          <span>{data.required ? <i className="pi pi-check"></i> : <></>}</span>
-        )}></Column>
+        body={(data: any) => <CheckOrX value={data.required} />}></Column>
       <Column
         field="unique"
         header="Unique"
         sortable
         style={{ textAlign: "center" }}
-        body={(data: any) => (
-          <span>{data.unique ? <i className="pi pi-check"></i> : <></>}</span>
-        )}></Column>
+        body={(data: any) => <CheckOrX value={data.unique} />}></Column>
       <Column
         field="validation"
         header="Validation"
         sortable
         style={{ textAlign: "center" }}
-        body={(data: any) => (
-          <span>{data.validation ? <i className="pi pi-check"></i> : <></>}</span>
-        )}></Column>
+        body={(data: any) => <CheckOrX value={data.validation} />}></Column>
     </DataTable>
   );
 };

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Menubar } from "primereact/menubar";
 import AppSearch from "./AppSearch";
 import { AppContext, AppDataContext } from "./Store";
@@ -15,7 +15,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <Menubar start={logoHomeLink} end={AppSearch} />
+      <Menubar
+        start={logoHomeLink}
+        end={AppSearch}
+        style={{
+          paddingLeft: "2rem",
+          paddingRight: "2rem",
+        }}
+      />
+
       {children}
       <footer>
         <div id="footer-inner">

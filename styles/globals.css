@@ -21,7 +21,7 @@ body {
 }
 
 .p-menubar {
-  max-width: 1200px;
+  max-width: 1800px;
   margin: 0 auto;
 }
 
@@ -33,12 +33,12 @@ body {
 }
 
 main {
-  max-width: 1200px;
+  max-width: 1800px;
   margin: 2rem auto;
 }
 
 footer {
-  max-width: 1200px;
+  max-width: 1800px;
   margin: 0 auto;
   padding: 2rem 0;
   text-align: center;
@@ -83,11 +83,11 @@ div.grid {
 }
 
 div.metadata div {
-  grid-column: span 3;
+  grid-column: span 4;
 }
 
 div.past-searches div {
-  grid-column: span 4;
+  grid-column: span 3;
 }
 
 div.objects div,

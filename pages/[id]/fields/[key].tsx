@@ -4,12 +4,13 @@ import { AppContext, AppDataContext } from "@/components/Store";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { DataTable, DataTableExpandedRows, DataTableValueArray } from "primereact/datatable";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../../_app";
 import Link from "next/link";
+import { Panel } from "primereact/panel";
+import CheckOrX from "@/components/CheckOrX";
 
 const FieldDetail: NextPageWithLayout = () => {
   // get the id from the url
@@ -84,34 +85,35 @@ const FieldDetail: NextPageWithLayout = () => {
             <h2 className="detail-title purple">{appData.fieldsByKey[fieldKey].name}</h2>
             {/* <p className="detail-p">Field</p> */}
             <div className="grid metadata">
-              <Card title="Key">
+              <Panel header="Key">
                 <p>{appData.fieldsByKey[fieldKey].key}</p>
-              </Card>
-              <Card title="Type">
+              </Panel>
+              <Panel header="Type">
                 <p>{appData.fieldsByKey[fieldKey].type}</p>
-              </Card>
+              </Panel>
 
-              <Card title="Object">
+              <Panel header="Object">
                 <Link href={`/${appId}/objects/${appData.fieldsByKey[fieldKey].object_key}`}>
                   <p>{appData.fieldsByKey[fieldKey].object_key}</p>
                 </Link>
-              </Card>
+              </Panel>
 
-              <Card title="Required">
-                <p>{appData.fieldsByKey[fieldKey].required ? "Yes" : "No"}</p>
-              </Card>
-              <Card title="Unique">
-                <p>{appData.fieldsByKey[fieldKey].unique ? "Yes" : "No"}</p>
-              </Card>
+              <Panel header="Required">
+                <CheckOrX value={appData.fieldsByKey[fieldKey].required} />
+              </Panel>
+              <Panel header="Unique">
+                <CheckOrX value={appData.fieldsByKey[fieldKey].unique} />
+              </Panel>
             </div>
 
             <DataTable
+              paginator
+              rows={10}
+              rowsPerPageOptions={[10, 25, 50]}
               className="mb-6 mt-6"
               value={appData.fieldsByKey[fieldKey].validation}
               header="Validation Rules"
               emptyMessage="No validation rules"
-              scrollable
-              scrollHeight="750px"
               selectionMode="single"
               expandedRows={expandedRows}
               onRowToggle={(e) => setExpandedRows(e.data)}

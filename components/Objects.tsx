@@ -15,7 +15,7 @@ const Objects = ({ appData }: { appData: KnackAppData }) => {
     const filterAppData = () => {
       const filteredObjects = appData.objects.filter((object: any) => {
         return (
-          object.name.toLowerCase().includes(search.trim().toLowerCase()) ||
+          object.name?.toLowerCase().includes(search.trim().toLowerCase()) ||
           object.key.toLowerCase().includes(search.trim().toLowerCase())
         );
       });
@@ -42,18 +42,18 @@ const Objects = ({ appData }: { appData: KnackAppData }) => {
   );
 
   const getRecords = (object: any) => {
-    return appData.recordCounts[object.key].toLocaleString();
+    return appData.recordCounts[object.key]?.toLocaleString() || 0;
   };
 
   return (
     <DataTable
+      paginator
+      rows={10}
+      rowsPerPageOptions={[10, 25, 50]}
       value={filteredAppData}
       header={header}
       emptyMessage="No objects"
-      scrollable
-      scrollHeight="750px"
       selectionMode="single"
-      virtualScrollerOptions={{ itemSize: 46 }}
       sortMode="multiple"
       onRowSelect={(e) => {
         const objectKey = e.data.key;

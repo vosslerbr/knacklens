@@ -2,18 +2,20 @@ import { useRouter } from "next/router";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
-import { useEffect, useState } from "react";
-import { KnackAppData } from "./Store";
+import { useContext, useEffect, useState } from "react";
+import { AppContext, AppDataContext } from "../Store";
 
-const Scenes = ({ appData }: { appData: KnackAppData }) => {
+const ScenesTable = ({ scenes }: { scenes: any[] }) => {
   const [search, setSearch] = useState("");
-  const [filteredAppData, setFilteredAppData] = useState(appData.scenes);
+  const [filteredAppData, setFilteredAppData] = useState(scenes);
+
+  const { appData } = useContext(AppContext) as AppDataContext;
 
   const router = useRouter();
 
   useEffect(() => {
     const filterAppData = () => {
-      const filteredScenes = appData.scenes.filter((scene: any) => {
+      const filteredScenes = scenes.filter((scene: any) => {
         return (
           scene.name.toLowerCase().includes(search.trim().toLowerCase()) ||
           scene.key.toLowerCase().includes(search.trim().toLowerCase())
@@ -26,11 +28,11 @@ const Scenes = ({ appData }: { appData: KnackAppData }) => {
     };
 
     filterAppData();
-  }, [search, appData]);
+  }, [search, scenes]);
 
   const header = (
     <div className="flex flex-wrap align-items-center justify-content-between gap-2">
-      <span className="text-xl text-900 font-bold">{appData.sceneCount} Total Scenes</span>
+      <span className="text-xl text-900 font-bold">{scenes.length} Scenes</span>
       <InputText
         placeholder="Search by name or key"
         type="text"
@@ -54,7 +56,7 @@ const Scenes = ({ appData }: { appData: KnackAppData }) => {
       onRowSelect={(e) => {
         const sceneKey = e.data.key;
 
-        router.push(`/${appData.id}/scenes/${sceneKey}`);
+        router.push(`/${appData?.id}/scenes/${sceneKey}`);
       }}>
       <Column field="name" header="Name" sortable></Column>
       <Column field="key" header="Key" sortable></Column>
@@ -64,4 +66,4 @@ const Scenes = ({ appData }: { appData: KnackAppData }) => {
   );
 };
 
-export default Scenes;
+export default ScenesTable;

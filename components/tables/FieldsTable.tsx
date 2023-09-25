@@ -2,19 +2,20 @@ import { useRouter } from "next/router";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
-import { useEffect, useState } from "react";
-import { KnackAppData } from "./Store";
-import CheckOrX from "./CheckOrX";
+import { useContext, useEffect, useState } from "react";
+import { AppContext, AppDataContext } from "../Store";
+import CheckOrX from "../CheckOrX";
 
-const Fields = ({ appData }: { appData: KnackAppData }) => {
+const FieldsTable = ({ fields }: { fields: any[] }) => {
   const [search, setSearch] = useState("");
-  const [filteredAppData, setFilteredAppData] = useState(appData.fields);
+  const [filteredFields, setFilteredFields] = useState(fields);
+  const { appData } = useContext(AppContext) as AppDataContext;
 
   const router = useRouter();
 
   useEffect(() => {
     const filterAppData = () => {
-      const filteredFields = appData.fields.filter((field: any) => {
+      const filteredFields = fields.filter((field: any) => {
         return (
           field.name.toLowerCase().includes(search.trim().toLowerCase()) ||
           field.key.toLowerCase().includes(search.trim().toLowerCase())
@@ -23,15 +24,15 @@ const Fields = ({ appData }: { appData: KnackAppData }) => {
 
       console.log("FILTERED fields: ", filteredFields);
 
-      setFilteredAppData(filteredFields);
+      setFilteredFields(filteredFields);
     };
 
     filterAppData();
-  }, [search, appData]);
+  }, [search, fields]);
 
   const header = (
     <div className="flex flex-wrap align-items-center justify-content-between gap-2">
-      <span className="text-xl text-900 font-bold">{appData.fields.length} Total Fields</span>
+      <span className="text-xl text-900 font-bold">{fields.length} Fields</span>
       <InputText
         placeholder="Search by name or key"
         type="text"
@@ -47,7 +48,7 @@ const Fields = ({ appData }: { appData: KnackAppData }) => {
       paginator
       rows={10}
       rowsPerPageOptions={[10, 25, 50]}
-      value={filteredAppData}
+      value={filteredFields}
       header={header}
       emptyMessage="No fields"
       selectionMode="single"
@@ -55,7 +56,7 @@ const Fields = ({ appData }: { appData: KnackAppData }) => {
       onRowSelect={(e) => {
         const fieldKey = e.data.key;
 
-        router.push(`/${appData.id}/fields/${fieldKey}`);
+        router.push(`/${appData?.id}/fields/${fieldKey}`);
       }}>
       <Column field="name" header="Name" sortable></Column>
       <Column field="key" header="Key" sortable></Column>
@@ -83,4 +84,4 @@ const Fields = ({ appData }: { appData: KnackAppData }) => {
   );
 };
 
-export default Fields;
+export default FieldsTable;

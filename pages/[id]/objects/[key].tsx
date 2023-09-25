@@ -10,7 +10,7 @@ import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../../_app";
 import { SelectButton } from "primereact/selectbutton";
 import { Panel } from "primereact/panel";
-import CheckOrX from "@/components/CheckOrX";
+import FieldsTable from "@/components/tables/FieldsTable";
 
 const ObjectDetail: NextPageWithLayout = () => {
   // get the id from the url
@@ -146,36 +146,7 @@ const ObjectDetail: NextPageWithLayout = () => {
 
             <div className="card">
               <h2 className="detail-title">Fields</h2>
-              <DataTable
-                paginator
-                rows={10}
-                rowsPerPageOptions={[10, 25, 50]}
-                className="mb-6"
-                value={appData.objectsByKey[objectKey].fields}
-                emptyMessage="No fields"
-                selectionMode="single"
-                sortMode="multiple"
-                onRowSelect={(e) => {
-                  const fieldKey = e.data.key;
-
-                  router.push(`/${appData.id}/fields/${fieldKey}`);
-                }}>
-                <Column field="name" header="Name" sortable></Column>
-                <Column field="key" header="Key" sortable></Column>
-                <Column field="type" header="Type" sortable></Column>
-                <Column
-                  field="required"
-                  header="Required"
-                  sortable
-                  style={{ textAlign: "center" }}
-                  body={(data: any) => <CheckOrX value={data.required} />}></Column>
-                <Column
-                  field="unique"
-                  header="Unique"
-                  sortable
-                  style={{ textAlign: "center" }}
-                  body={(data: any) => <CheckOrX value={data.unique} />}></Column>
-              </DataTable>
+              <FieldsTable fields={appData.objectsByKey[objectKey].fields} />
             </div>
           </>
         ) : (

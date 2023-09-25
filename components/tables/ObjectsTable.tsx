@@ -2,18 +2,20 @@ import { useRouter } from "next/router";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
-import { useEffect, useState } from "react";
-import { KnackAppData } from "./Store";
+import { useContext, useEffect, useState } from "react";
+import { AppContext, AppDataContext } from "../Store";
 
-const Objects = ({ appData }: { appData: KnackAppData }) => {
+const ObjectsTable = ({ objects }: { objects: any[] }) => {
   const [search, setSearch] = useState("");
-  const [filteredAppData, setFilteredAppData] = useState(appData.objects);
+  const [filteredAppData, setFilteredAppData] = useState(objects);
+
+  const { appData } = useContext(AppContext) as AppDataContext;
 
   const router = useRouter();
 
   useEffect(() => {
     const filterAppData = () => {
-      const filteredObjects = appData.objects.filter((object: any) => {
+      const filteredObjects = objects.filter((object: any) => {
         return (
           object.name?.toLowerCase().includes(search.trim().toLowerCase()) ||
           object.key.toLowerCase().includes(search.trim().toLowerCase())
@@ -26,11 +28,11 @@ const Objects = ({ appData }: { appData: KnackAppData }) => {
     };
 
     filterAppData();
-  }, [search, appData]);
+  }, [search, objects]);
 
   const header = (
     <div className="flex flex-wrap align-items-center justify-content-between gap-2">
-      <span className="text-xl text-900 font-bold">{appData.objectCount} Total Objects</span>
+      <span className="text-xl text-900 font-bold">{objects.length} Objects</span>
       <InputText
         placeholder="Search by name or key"
         type="text"
@@ -42,7 +44,7 @@ const Objects = ({ appData }: { appData: KnackAppData }) => {
   );
 
   const getRecords = (object: any) => {
-    return appData.recordCounts[object.key]?.toLocaleString() || 0;
+    return appData?.recordCounts[object.key]?.toLocaleString() || 0;
   };
 
   return (
@@ -58,7 +60,7 @@ const Objects = ({ appData }: { appData: KnackAppData }) => {
       onRowSelect={(e) => {
         const objectKey = e.data.key;
 
-        router.push(`/${appData.id}/objects/${objectKey}`);
+        router.push(`/${appData?.id}/objects/${objectKey}`);
       }}>
       <Column field="name" header="Name" sortable></Column>
       <Column field="key" header="Key" sortable></Column>
@@ -71,4 +73,4 @@ const Objects = ({ appData }: { appData: KnackAppData }) => {
   );
 };
 
-export default Objects;
+export default ObjectsTable;

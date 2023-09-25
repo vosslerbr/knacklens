@@ -2,19 +2,21 @@ import { useRouter } from "next/router";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
-import { useEffect, useState } from "react";
-import { KnackAppData } from "./Store";
-import CheckOrX from "./CheckOrX";
+import { useContext, useEffect, useState } from "react";
+import { AppContext, AppDataContext } from "../Store";
+import CheckOrX from "../CheckOrX";
 
-const Tasks = ({ appData }: { appData: KnackAppData }) => {
+const TasksTable = ({ tasks }: { tasks: any[] }) => {
   const [search, setSearch] = useState("");
-  const [filteredAppData, setFilteredAppData] = useState(appData.tasks);
+  const [filteredAppData, setFilteredAppData] = useState(tasks);
+
+  const { appData } = useContext(AppContext) as AppDataContext;
 
   const router = useRouter();
 
   useEffect(() => {
     const filterAppData = () => {
-      const filteredTasks = appData.tasks.filter((task: any) => {
+      const filteredTasks = tasks.filter((task: any) => {
         return (
           task.name.toLowerCase().includes(search.trim().toLowerCase()) ||
           task.key.toLowerCase().includes(search.trim().toLowerCase())
@@ -27,11 +29,11 @@ const Tasks = ({ appData }: { appData: KnackAppData }) => {
     };
 
     filterAppData();
-  }, [search, appData]);
+  }, [search, tasks]);
 
   const header = (
     <div className="flex flex-wrap align-items-center justify-content-between gap-2">
-      <span className="text-xl text-900 font-bold">{appData.tasks.length} Total Tasks</span>
+      <span className="text-xl text-900 font-bold">{tasks.length} Tasks</span>
       <InputText
         placeholder="Search by name or key"
         type="text"
@@ -55,7 +57,7 @@ const Tasks = ({ appData }: { appData: KnackAppData }) => {
       onRowSelect={(e) => {
         const taskKey = e.data.key;
 
-        router.push(`/${appData.id}/tasks/${taskKey}`);
+        router.push(`/${appData?.id}/tasks/${taskKey}`);
       }}>
       <Column field="name" header="Name" sortable></Column>
       <Column field="key" header="Key" sortable></Column>
@@ -78,4 +80,4 @@ const Tasks = ({ appData }: { appData: KnackAppData }) => {
   );
 };
 
-export default Tasks;
+export default TasksTable;

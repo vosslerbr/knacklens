@@ -1,17 +1,17 @@
 import Layout from "@/components/Layout";
 import Metadata from "@/components/Metadata";
-import Objects from "@/components/Objects";
 import PageLoading from "@/components/PageLoading";
-import Scenes from "@/components/Scenes";
 import { AppContext, AppDataContext } from "@/components/Store";
-import Tasks from "@/components/Tasks";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { TabPanel, TabView } from "primereact/tabview";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../_app";
-import Fields from "@/components/Fields";
+import FieldsTable from "@/components/tables/FieldsTable";
+import ObjectsTable from "@/components/tables/ObjectsTable";
+import ScenesTable from "@/components/tables/ScenesTable";
+import TasksTable from "@/components/tables/TasksTable";
 
 const AppView: NextPageWithLayout = () => {
   // get the id from the url
@@ -78,19 +78,19 @@ const AppView: NextPageWithLayout = () => {
                 <Metadata appData={appData} />
               </TabPanel>
               <TabPanel header="Objects">
-                <Objects appData={appData} />
+                <ObjectsTable objects={appData.objects} />
               </TabPanel>
               <TabPanel header="Fields">
-                <Fields appData={appData} />
+                <FieldsTable fields={appData.fields} />
               </TabPanel>
               <TabPanel header="Scenes">
-                <Scenes appData={appData} />
+                <ScenesTable scenes={appData.scenes} />
               </TabPanel>
               <TabPanel header="Views">
                 <p>VIEWS TODO</p>
               </TabPanel>
               <TabPanel header="Tasks">
-                <Tasks appData={appData} />
+                <TasksTable tasks={appData.tasks} />
               </TabPanel>
             </TabView>
           </div>

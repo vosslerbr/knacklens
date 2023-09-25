@@ -106,6 +106,21 @@ const FieldDetail: NextPageWithLayout = () => {
               </Panel>
             </div>
 
+            {appData.fieldsByKey[fieldKey]?.format?.options?.length > 0 && (
+              <DataTable
+                paginator
+                rows={10}
+                rowsPerPageOptions={[10, 25, 50]}
+                className="mb-6 mt-6"
+                value={appData.fieldsByKey[fieldKey].format.options.map((option: string) => ({
+                  val: option,
+                }))}
+                header="Field Options"
+                emptyMessage="No field options">
+                <Column field="val" sortable></Column>
+              </DataTable>
+            )}
+
             <DataTable
               paginator
               rows={10}

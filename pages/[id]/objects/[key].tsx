@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 import PageLoading from "@/components/PageLoading";
-import { AppContext, AppDataContext } from "@/components/Store";
+import { AppContext } from "@/components/Store";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -11,6 +11,7 @@ import { NextPageWithLayout } from "../../_app";
 import { SelectButton } from "primereact/selectbutton";
 import { Panel } from "primereact/panel";
 import FieldsTable from "@/components/tables/FieldsTable";
+import { AppDataContext } from "@/types";
 
 const ObjectDetail: NextPageWithLayout = () => {
   // get the id from the url

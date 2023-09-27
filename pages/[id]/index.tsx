@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import Metadata from "@/components/Metadata";
 import PageLoading from "@/components/PageLoading";
-import { AppContext, AppDataContext } from "@/components/Store";
+import { AppContext } from "@/components/Store";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -12,12 +12,13 @@ import FieldsTable from "@/components/tables/FieldsTable";
 import ObjectsTable from "@/components/tables/ObjectsTable";
 import ScenesTable from "@/components/tables/ScenesTable";
 import TasksTable from "@/components/tables/TasksTable";
+import { AppDataContext } from "@/types";
+import FieldRulesTable from "@/components/tables/FieldRulesTable";
+import ViewsTable from "@/components/tables/ViewsTable";
 
 const AppView: NextPageWithLayout = () => {
   // get the id from the url
   const id = useRouter().query.id as string;
-
-  console.log("ID: ", id);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -83,11 +84,14 @@ const AppView: NextPageWithLayout = () => {
               <TabPanel header="Fields">
                 <FieldsTable fields={appData.fields} />
               </TabPanel>
+              <TabPanel header="FieldRules">
+                <FieldRulesTable fieldRules={appData.fieldRules} />
+              </TabPanel>
               <TabPanel header="Scenes">
                 <ScenesTable scenes={appData.scenes} />
               </TabPanel>
               <TabPanel header="Views">
-                <p>VIEWS TODO</p>
+                <ViewsTable views={appData.views} />
               </TabPanel>
               <TabPanel header="Tasks">
                 <TasksTable tasks={appData.tasks} />

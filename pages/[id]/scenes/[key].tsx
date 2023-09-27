@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 import PageLoading from "@/components/PageLoading";
-import { AppContext, AppDataContext } from "@/components/Store";
+import { AppContext } from "@/components/Store";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -9,6 +9,8 @@ import { DataTable } from "primereact/datatable";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../../_app";
 import { Panel } from "primereact/panel";
+import { AppDataContext } from "@/types";
+import ViewsTable from "@/components/tables/ViewsTable";
 
 const SceneDetail: NextPageWithLayout = () => {
   // get the id from the url
@@ -95,25 +97,7 @@ const SceneDetail: NextPageWithLayout = () => {
               <Column field="action" header="Action" sortable></Column>
             </DataTable>
 
-            <DataTable
-              paginator
-              rows={10}
-              rowsPerPageOptions={[10, 25, 50]}
-              className="mb-6 mt-6"
-              value={appData.scenesByKey[sceneKey].views}
-              header="Views"
-              emptyMessage="No views"
-              selectionMode="single"
-              sortMode="multiple"
-              onRowSelect={(e) => {
-                const objectKey = e.data.object;
-
-                console.log("objectKey: ", objectKey);
-              }}>
-              <Column field="name" header="Name" sortable></Column>
-              <Column field="key" header="Key" sortable></Column>
-              <Column field="type" header="Type" sortable></Column>
-            </DataTable>
+            <ViewsTable views={appData.scenesByKey[sceneKey].views} />
           </div>
         ) : (
           <PageLoading />

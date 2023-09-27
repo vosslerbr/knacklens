@@ -1,5 +1,4 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { KnackAppData } from "@/components/Store";
+import { KnackAppData } from "@/types";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -17,8 +16,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const rawAppData = data.application;
 
+  const fields: any[] = [];
+  const fieldsByKey: any = {};
+
+  const tasks: any[] = [];
+  const tasksByKey: any = {};
+
+  const fieldRules: any[] = [];
+  // TODO field rules by field key
+
   const objectsByKey = rawAppData.objects.reduce((acc: any, object: any) => {
     const count = rawAppData.counts[object.key];
+
+    // add field to fields array and fieldsByKey object
+    object.fields.forEach((field: any) => {
+      fields.push(field);
+      fieldsByKey[field.key] = field;
+
+      fieldRules.push(...(field?.rules || []));
+    });
+
+    // add task to tasks array and tasksByKey object
+    object.tasks.forEach((task: any) => {
+      tasks.push(task);
+      tasksByKey[task.key] = task;
+    });
 
     acc[object.key] = {
       ...object,
@@ -27,40 +49,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return acc;
   }, {});
 
-  const fields: any[] = [];
-  const fieldsByKey: any = {};
-
-  rawAppData.objects.forEach((object: any) => {
-    object.fields.forEach((field: any) => {
-      fields.push(field);
-      fieldsByKey[field.key] = field;
-    });
-  });
-
-  const scenesByKey = rawAppData.scenes.reduce((acc: any, scene: any) => {
-    acc[scene.key] = scene;
-    return acc;
-  }, {});
-
   const views: any[] = [];
   const viewsByKey: any = {};
 
-  rawAppData.scenes.forEach((scene: any) => {
+  const viewRules: any[] = [];
+
+  const scenesByKey = rawAppData.scenes.reduce((acc: any, scene: any) => {
+    // add view to views array and viewsByKey object
     scene.views.forEach((view: any) => {
       views.push(view);
       viewsByKey[view.key] = view;
-    });
-  });
 
-  const tasks: any[] = [];
-  const tasksByKey: any = {};
-
-  rawAppData.objects.forEach((object: any) => {
-    object.tasks.forEach((task: any) => {
-      tasks.push(task);
-      tasksByKey[task.key] = task;
+      // viewRules.push(...(view?.rules || []));
     });
-  });
+
+    acc[scene.key] = scene;
+    return acc;
+  }, {});
 
   // format data to a more useful format
 
@@ -83,10 +88,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     objectsByKey,
     fields,
     fieldsByKey,
+    fieldRules,
     scenes: rawAppData.scenes,
     scenesByKey,
     views,
     viewsByKey,
+    viewRules,
     tasks,
     tasksByKey,
   };

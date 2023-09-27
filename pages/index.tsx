@@ -7,10 +7,11 @@ import { Column } from "primereact/column";
 import { Card } from "primereact/card";
 import Link from "next/link";
 import { Button } from "primereact/button";
-import { AppIdContext, KnackIDContext } from "@/components/Store";
+import { AppIdContext } from "@/components/Store";
+import { KnackIDContext } from "@/types";
 
 const Home: NextPageWithLayout = () => {
-  const { knackAppId, setKnackAppId } = useContext(AppIdContext) as KnackIDContext;
+  const { setKnackAppId } = useContext(AppIdContext) as KnackIDContext;
   const [pastSearches, setPastSearches] = useState<{ [key: string]: string }[]>([]);
 
   useEffect(() => {

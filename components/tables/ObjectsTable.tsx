@@ -3,7 +3,8 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
 import { useContext, useEffect, useState } from "react";
-import { AppContext, AppDataContext } from "../Store";
+import { AppContext } from "../Store";
+import { AppDataContext } from "@/types";
 
 const ObjectsTable = ({ objects }: { objects: any[] }) => {
   const [search, setSearch] = useState("");

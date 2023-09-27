@@ -1,6 +1,6 @@
+import { KnackAppData } from "@/types";
 import { Panel } from "primereact/panel";
 import { Tag } from "primereact/tag";
-import { KnackAppData } from "./Store";
 
 const Metadata = ({ appData }: { appData: KnackAppData }) => {
   return (

@@ -6,7 +6,7 @@ import "../styles/reset.css";
 import "../styles/globals.css";
 
 //theme
-import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/themes/viva-dark/theme.css";
 
 import "primeflex/primeflex.css";
 

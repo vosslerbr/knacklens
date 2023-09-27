@@ -2,7 +2,8 @@ import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { Menubar } from "primereact/menubar";
 import AppSearch from "./AppSearch";
-import { AppContext, AppDataContext } from "./Store";
+import { AppContext } from "./Store";
+import { AppDataContext } from "@/types";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { appData } = useContext(AppContext) as AppDataContext;

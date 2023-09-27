@@ -1,6 +1,5 @@
 import Layout from "@/components/Layout";
 import PageLoading from "@/components/PageLoading";
-import { AppContext, AppDataContext } from "@/components/Store";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -11,6 +10,10 @@ import { NextPageWithLayout } from "../../_app";
 import Link from "next/link";
 import { Panel } from "primereact/panel";
 import CheckOrX from "@/components/CheckOrX";
+import { AppContext } from "@/components/Store";
+import { AppDataContext } from "@/types";
+import { Row } from "primereact/row";
+import { TreeTable } from "primereact/treetable";
 
 const FieldDetail: NextPageWithLayout = () => {
   // get the id from the url
@@ -26,6 +29,8 @@ const FieldDetail: NextPageWithLayout = () => {
   >(undefined);
 
   const { appData, setAppData } = useContext(AppContext) as AppDataContext;
+
+  const field = appData?.fieldsByKey[fieldKey];
 
   useEffect(() => {
     const loadAppData = async () => {
@@ -58,6 +63,8 @@ const FieldDetail: NextPageWithLayout = () => {
 
   // TODO add typing
   const rowExpansionTemplate = (data: any) => {
+    console.log("data: ", data);
+
     return (
       <div className="p-3">
         <h5>Criteria</h5>
@@ -65,6 +72,8 @@ const FieldDetail: NextPageWithLayout = () => {
           <Column field="field" header="Field" sortable></Column>
           <Column field="operator" header="Operator" sortable></Column>
           <Column field="value" header="Value" sortable></Column>
+          <Column field="value_type" header="Value Type" sortable></Column>
+          <Column field="value_field" header="Value Field" sortable></Column>
         </DataTable>
       </div>
     );
@@ -82,52 +91,71 @@ const FieldDetail: NextPageWithLayout = () => {
         {!loading && appData ? (
           <div className="card">
             <h2 id="app-name">{appData?.appName}</h2>
-            <h2 className="detail-title purple">{appData.fieldsByKey[fieldKey].name}</h2>
+            <h2 className="detail-title purple">{field.name}</h2>
             {/* <p className="detail-p">Field</p> */}
             <div className="grid metadata">
               <Panel header="Key">
-                <p>{appData.fieldsByKey[fieldKey].key}</p>
-              </Panel>
-              <Panel header="Type">
-                <p>{appData.fieldsByKey[fieldKey].type}</p>
+                <p>{field.key}</p>
               </Panel>
 
               <Panel header="Object">
-                <Link href={`/${appId}/objects/${appData.fieldsByKey[fieldKey].object_key}`}>
-                  <p>{appData.fieldsByKey[fieldKey].object_key}</p>
+                <Link href={`/${appId}/objects/${field.object_key}`}>
+                  <p>{field.object_key}</p>
                 </Link>
               </Panel>
 
+              <Panel header="Type">
+                <p>{field.type}</p>
+              </Panel>
+
+              {field.type === "multiple_choice" && (
+                <Panel header="Selection Type">
+                  <p>{field.format.type}</p>
+                </Panel>
+              )}
+
               <Panel header="Required">
-                <CheckOrX value={appData.fieldsByKey[fieldKey].required} />
+                <CheckOrX value={field.required} />
               </Panel>
               <Panel header="Unique">
-                <CheckOrX value={appData.fieldsByKey[fieldKey].unique} />
+                <CheckOrX value={field.unique} />
               </Panel>
             </div>
-
-            {appData.fieldsByKey[fieldKey]?.format?.options?.length > 0 && (
+            {field?.format?.options?.length > 0 && (
               <DataTable
+                header="Field Options"
                 paginator
                 rows={10}
                 rowsPerPageOptions={[10, 25, 50]}
                 className="mb-6 mt-6"
-                value={appData.fieldsByKey[fieldKey].format.options.map((option: string) => ({
+                value={field.format.options.map((option: string) => ({
                   val: option,
                 }))}
-                header="Field Options"
                 emptyMessage="No field options">
                 <Column field="val" sortable></Column>
               </DataTable>
             )}
 
-            <DataTable
+            {/* TODO */}
+            <TreeTable
+              header="Conditional Rules"
               paginator
               rows={10}
               rowsPerPageOptions={[10, 25, 50]}
               className="mb-6 mt-6"
-              value={appData.fieldsByKey[fieldKey].validation}
+              value={field.rules}
+              emptyMessage="No conditional rules"
+              selectionMode="single">
+              <Column field="key" header="Rule Key" sortable></Column>
+            </TreeTable>
+
+            <DataTable
               header="Validation Rules"
+              paginator
+              rows={10}
+              rowsPerPageOptions={[10, 25, 50]}
+              className="mb-6 mt-6"
+              value={field.validation}
               emptyMessage="No validation rules"
               selectionMode="single"
               expandedRows={expandedRows}

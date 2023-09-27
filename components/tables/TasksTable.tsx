@@ -3,8 +3,9 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
 import { useContext, useEffect, useState } from "react";
-import { AppContext, AppDataContext } from "../Store";
+import { AppContext } from "../Store";
 import CheckOrX from "../CheckOrX";
+import { AppDataContext } from "@/types";
 
 const TasksTable = ({ tasks }: { tasks: any[] }) => {
   const [search, setSearch] = useState("");

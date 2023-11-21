@@ -67,6 +67,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return acc;
   }, {});
 
+  const sceneEmailRules = rawAppData.scenes.reduce((acc: any, scene: any) => {
+    const rules = scene?.rules || [];
+
+    rules?.forEach((rule: any) => {
+      console.log(rule);
+
+      if (!rule) return;
+
+      rule?.criteria?.forEach((criterion: any) => {
+        if (criterion?.field === "all_users-field_14" && criterion?.value?.includes("ksensetech")) {
+          acc.push({ scene: scene.key, criterion });
+        }
+      });
+    });
+
+    return acc;
+  }, []);
+
   // format data to a more useful format
 
   // TODO rules
@@ -96,6 +114,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     viewRules,
     tasks,
     tasksByKey,
+    sceneEmailRules,
   };
 
   res.status(200).json(formattedAppData);

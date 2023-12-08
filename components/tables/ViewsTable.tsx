@@ -1,11 +1,18 @@
+import { useRouter } from "next/router";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../Store";
+import { AppDataContext } from "@/types";
 
 const ViewsTable = ({ views }: { views: any[] }) => {
   const [search, setSearch] = useState("");
   const [filteredAppData, setFilteredAppData] = useState(views);
+
+  const { appData } = useContext(AppContext) as AppDataContext;
+
+  const router = useRouter();
 
   useEffect(() => {
     const filterAppData = () => {
@@ -48,9 +55,9 @@ const ViewsTable = ({ views }: { views: any[] }) => {
       selectionMode="single"
       sortMode="multiple"
       onRowSelect={(e) => {
-        const objectKey = e.data.object;
+        const viewKey = e.data.key;
 
-        console.log("objectKey: ", objectKey);
+        router.push(`/${appData?.id}/views/${viewKey}`);
       }}>
       <Column field="name" header="Name" sortable></Column>
       <Column field="key" header="Key" sortable></Column>

@@ -5,9 +5,6 @@ import { Tag } from "primereact/tag";
 const Metadata = ({ appData }: { appData: KnackAppData }) => {
   return (
     <div className="grid metadata">
-      <Panel header="App Description">
-        <p>{appData.appDescription || "No description chosen"}</p>
-      </Panel>
       <Panel header="Slug">
         <p>{appData.appSlug}</p>
       </Panel>

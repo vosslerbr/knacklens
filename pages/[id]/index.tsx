@@ -74,6 +74,7 @@ const AppView: NextPageWithLayout = () => {
         {!loading && appData ? (
           <div className="card">
             <h2 id="app-name">{appData?.appName}</h2>
+            <p id="app-desc">{appData?.appDescription}</p>
             <TabView>
               <TabPanel header="Metadata">
                 <Metadata appData={appData} />

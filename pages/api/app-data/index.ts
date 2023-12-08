@@ -1,4 +1,6 @@
 import { KnackAppData } from "@/types";
+import getObjectsAndFields from "@/utils/server/getObjectsAndFields";
+import getScenesAndViews from "@/utils/server/getScenesAndViews";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -16,78 +18,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const rawAppData = data.application;
 
-  const fields: any[] = [];
-  const fieldsByKey: any = {};
+  const { fields, fieldsByKey, fieldRules, objectsByKey, tasks, tasksByKey } =
+    getObjectsAndFields(rawAppData);
 
-  const tasks: any[] = [];
-  const tasksByKey: any = {};
+  const { scenesByKey, views, viewsByKey, viewRules } = getScenesAndViews(rawAppData);
 
-  const fieldRules: any[] = [];
-  // TODO field rules by field key
-
-  const objectsByKey = rawAppData.objects.reduce((acc: any, object: any) => {
-    const count = rawAppData.counts[object.key];
-
-    // add field to fields array and fieldsByKey object
-    object.fields.forEach((field: any) => {
-      fields.push(field);
-      fieldsByKey[field.key] = field;
-
-      fieldRules.push(...(field?.rules || []));
-    });
-
-    // add task to tasks array and tasksByKey object
-    object.tasks.forEach((task: any) => {
-      tasks.push(task);
-      tasksByKey[task.key] = task;
-    });
-
-    acc[object.key] = {
-      ...object,
-      count,
-    };
-    return acc;
-  }, {});
-
-  const views: any[] = [];
-  const viewsByKey: any = {};
-
-  const viewRules: any[] = [];
-
-  const scenesByKey = rawAppData.scenes.reduce((acc: any, scene: any) => {
-    // add view to views array and viewsByKey object
-    scene.views.forEach((view: any) => {
-      views.push(view);
-      viewsByKey[view.key] = view;
-
-      // viewRules.push(...(view?.rules || []));
-    });
-
-    acc[scene.key] = scene;
-    return acc;
-  }, {});
-
-  const sceneEmailRules = rawAppData.scenes.reduce((acc: any, scene: any) => {
-    const rules = scene?.rules || [];
-
-    rules?.forEach((rule: any) => {
-      console.log(rule);
-
-      if (!rule) return;
-
-      rule?.criteria?.forEach((criterion: any) => {
-        if (criterion?.field === "all_users-field_14" && criterion?.value?.includes("ksensetech")) {
-          acc.push({ scene: scene.key, criterion });
-        }
-      });
-    });
-
-    return acc;
-  }, []);
-
-  // format data to a more useful format
-
-  // TODO rules
   const formattedAppData: KnackAppData = {
     id: rawAppData.id,
     appName: rawAppData.name,
@@ -114,7 +49,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     viewRules,
     tasks,
     tasksByKey,
-    sceneEmailRules,
   };
 
   res.status(200).json(formattedAppData);

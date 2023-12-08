@@ -29,7 +29,6 @@ export type KnackAppData = {
   tasksByKey: { [key: string]: any };
   fieldRules: any[];
   viewRules: any[];
-  sceneEmailRules: any[];
 };
 
 export type AppDataContext = {

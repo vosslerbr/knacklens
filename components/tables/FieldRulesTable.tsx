@@ -4,7 +4,7 @@ import { DataTable, DataTableExpandedRows, DataTableValueArray } from "primereac
 import { InputText } from "primereact/inputtext";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../Store";
-import CheckOrX from "../CheckOrX";
+import YesNoTag from "../YesNoTag";
 import { AppDataContext } from "@/types";
 
 const FieldRulesTable = ({ fieldRules }: { fieldRules: any[] }) => {

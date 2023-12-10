@@ -1,4 +1,4 @@
-import CheckOrX from "@/components/CheckOrX";
+import YesNoTag from "@/components/YesNoTag";
 import { Panel } from "primereact/panel";
 
 const DetailDetails = ({ viewDetails }: { viewDetails: any }) => {
@@ -16,7 +16,7 @@ const DetailDetails = ({ viewDetails }: { viewDetails: any }) => {
           <p>{viewDetails.source?.object}</p>
         </Panel>
         <Panel header="Hide Fields">
-          <CheckOrX value={viewDetails.hide_fields} />
+          <YesNoTag value={viewDetails.hide_fields} />
         </Panel>
         <Panel header="Layout">
           <p>{viewDetails.layout}</p>

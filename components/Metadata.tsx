@@ -1,6 +1,6 @@
 import { KnackAppData } from "@/types";
 import { Panel } from "primereact/panel";
-import { Tag } from "primereact/tag";
+import YesNoTag from "./YesNoTag";
 
 const Metadata = ({ appData }: { appData: KnackAppData }) => {
   return (
@@ -30,19 +30,11 @@ const Metadata = ({ appData }: { appData: KnackAppData }) => {
         <p>{appData.appTimezone}</p>
       </Panel>
       <Panel header="E-commerce">
-        {appData.ecommerceEnabled ? (
-          <Tag value="Enabled" severity="success" />
-        ) : (
-          <Tag value="Disabled" severity="danger" />
-        )}
+        <YesNoTag value={appData.ecommerceEnabled} trueLabel="Enabled" falseLabel="Disabled" />
       </Panel>
 
       <Panel header="Users">
-        {appData.usersEnabled ? (
-          <Tag value="Enabled" severity="success" />
-        ) : (
-          <Tag value="Disabled" severity="danger" />
-        )}
+        <YesNoTag value={appData.usersEnabled} trueLabel="Enabled" falseLabel="Disabled" />
       </Panel>
     </div>
   );

@@ -4,7 +4,7 @@ import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../Store";
-import CheckOrX from "../CheckOrX";
+import YesNoTag from "../YesNoTag";
 import { AppDataContext } from "@/types";
 
 const TasksTable = ({ tasks }: { tasks: any[] }) => {
@@ -70,13 +70,13 @@ const TasksTable = ({ tasks }: { tasks: any[] }) => {
         header="Scheduled"
         sortable
         style={{ textAlign: "center" }}
-        body={(data: any) => <CheckOrX value={data.scheduled} />}></Column>
+        body={(data: any) => <YesNoTag value={data.scheduled} />}></Column>
       <Column
         field="run_status"
         header="Running"
         sortable
         style={{ textAlign: "center" }}
-        body={(data: any) => <CheckOrX value={data.run_status} />}></Column>
+        body={(data: any) => <YesNoTag value={data.run_status} />}></Column>
     </DataTable>
   );
 };

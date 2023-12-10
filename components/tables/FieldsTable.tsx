@@ -4,7 +4,7 @@ import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../Store";
-import CheckOrX from "../CheckOrX";
+import YesNoTag from "../YesNoTag";
 import { AppDataContext } from "@/types";
 
 const FieldsTable = ({ fields }: { fields: any[] }) => {
@@ -68,19 +68,19 @@ const FieldsTable = ({ fields }: { fields: any[] }) => {
         header="Required"
         sortable
         style={{ textAlign: "center" }}
-        body={(data: any) => <CheckOrX value={data.required} />}></Column>
+        body={(data: any) => <YesNoTag value={data.required} />}></Column>
       <Column
         field="unique"
         header="Unique"
         sortable
         style={{ textAlign: "center" }}
-        body={(data: any) => <CheckOrX value={data.unique} />}></Column>
+        body={(data: any) => <YesNoTag value={data.unique} />}></Column>
       <Column
         field="validation"
         header="Validation"
         sortable
         style={{ textAlign: "center" }}
-        body={(data: any) => <CheckOrX value={data.validation} />}></Column>
+        body={(data: any) => <YesNoTag value={data.validation} />}></Column>
     </DataTable>
   );
 };

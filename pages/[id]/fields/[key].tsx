@@ -9,7 +9,7 @@ import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../../_app";
 import Link from "next/link";
 import { Panel } from "primereact/panel";
-import CheckOrX from "@/components/CheckOrX";
+import YesNoTag from "@/components/YesNoTag";
 import { AppContext } from "@/components/Store";
 import { AppDataContext } from "@/types";
 import { Row } from "primereact/row";
@@ -115,10 +115,10 @@ const FieldDetail: NextPageWithLayout = () => {
               )}
 
               <Panel header="Required">
-                <CheckOrX value={field.required} />
+                <YesNoTag value={field.required} />
               </Panel>
               <Panel header="Unique">
-                <CheckOrX value={field.unique} />
+                <YesNoTag value={field.unique} />
               </Panel>
             </div>
             {field?.format?.options?.length > 0 && (

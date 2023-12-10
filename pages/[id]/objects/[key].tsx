@@ -26,6 +26,11 @@ const ObjectDetail: NextPageWithLayout = () => {
 
   const { appData, setAppData } = useContext(AppContext) as AppDataContext;
 
+  const object = appData?.objectsByKey[objectKey];
+
+  console.log("object: ", object);
+  console.log("field: ", appData?.fieldsByKey[object?.identifier].name);
+
   useEffect(() => {
     const loadAppData = async () => {
       try {
@@ -62,7 +67,7 @@ const ObjectDetail: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>KnackLens</title>
+        <title>KnackLens | {objectKey}</title>
         <meta name="description" content="Easily view Knack application metadata" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -72,22 +77,22 @@ const ObjectDetail: NextPageWithLayout = () => {
           <>
             <div className="card">
               <h2 id="app-name">{appData?.appName}</h2>
-              <h2 className="detail-title purple">{appData.objectsByKey[objectKey].name}</h2>
+              <h2 className="detail-title purple">{object.name}</h2>
               <div className="grid metadata">
                 <Panel header="Key">
-                  <p>{appData.objectsByKey[objectKey].key}</p>
+                  <p>{object.key}</p>
                 </Panel>
                 <Panel header="Identifier">
-                  <p>{appData.objectsByKey[objectKey].identifier}</p>
+                  <p>{object.identifier}</p>
                 </Panel>
                 <Panel header="Records">
-                  <p>{appData.objectsByKey[objectKey].count.toLocaleString()}</p>
+                  <p>{object.count.toLocaleString()}</p>
                 </Panel>
                 <Panel header="Sort Field">
-                  <p>{appData.objectsByKey[objectKey]?.sort?.field || "None"}</p>
+                  <p>{object?.sort?.field || "None"}</p>
                 </Panel>
                 <Panel header="Sort Order">
-                  <p>{appData.objectsByKey[objectKey]?.sort?.order || "None"}</p>
+                  <p>{object?.sort?.order || "None"}</p>
                 </Panel>
               </div>
             </div>
@@ -109,7 +114,7 @@ const ObjectDetail: NextPageWithLayout = () => {
                   paginator
                   rows={10}
                   rowsPerPageOptions={[10, 25, 50]}
-                  value={appData.objectsByKey[objectKey].connections.inbound}
+                  value={object.connections.inbound}
                   emptyMessage="No inbound connections"
                   selectionMode="single"
                   sortMode="multiple"
@@ -128,7 +133,7 @@ const ObjectDetail: NextPageWithLayout = () => {
                   paginator
                   rows={10}
                   rowsPerPageOptions={[10, 25, 50]}
-                  value={appData.objectsByKey[objectKey].connections.outbound}
+                  value={object.connections.outbound}
                   emptyMessage="No outbound connections"
                   selectionMode="single"
                   sortMode="multiple"
@@ -147,7 +152,7 @@ const ObjectDetail: NextPageWithLayout = () => {
 
             <div className="card">
               <h2 className="detail-title">Fields</h2>
-              <FieldsTable fields={appData.objectsByKey[objectKey].fields} />
+              <FieldsTable fields={object.fields} />
             </div>
           </>
         ) : (

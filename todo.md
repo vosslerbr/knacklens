@@ -15,3 +15,4 @@
 # Dev ToDos
 
 - See if the data fetching on page load can be a hook instead
+- URL params for table sorting, pagination, etc

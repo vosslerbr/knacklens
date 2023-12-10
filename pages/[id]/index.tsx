@@ -72,24 +72,25 @@ const AppView: NextPageWithLayout = () => {
             <p id="app-desc">{appData?.appDescription}</p>
 
             <div id="app-links">
-              <Link href={`/${appData.id}/views`}>
-                <Button label="Views" />
-              </Link>
               <Link href={`/${appData.id}/objects`}>
                 <Button label="Objects" />
               </Link>
               <Link href={`/${appData.id}/fields`}>
                 <Button label="Fields" />
               </Link>
-              <Link href={`/${appData.id}/field-rules`}>
-                <Button label="Field Rules" />
-              </Link>
               <Link href={`/${appData.id}/scenes`}>
                 <Button label="Scenes" />
+              </Link>
+              <Link href={`/${appData.id}/views`}>
+                <Button label="Views" />
               </Link>
               <Link href={`/${appData.id}/tasks`}>
                 <Button label="Tasks" />
               </Link>
+              {/* //TODO */}
+              {/* <Link href={`/${appData.id}/field-rules`}>
+                <Button label="Field Rules" />
+              </Link> */}
             </div>
 
             <Metadata appData={appData} />

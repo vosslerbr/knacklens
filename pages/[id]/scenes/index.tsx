@@ -1,17 +1,15 @@
 import Layout from "@/components/Layout";
-import Metadata from "@/components/Metadata";
 import PageLoading from "@/components/PageLoading";
 import { AppContext } from "@/components/Store";
+import ScenesTable from "@/components/tables/ScenesTable";
 import { AppDataContext } from "@/types";
 import axios from "axios";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactElement, useContext, useEffect, useState } from "react";
-import { NextPageWithLayout } from "../_app";
-import { Button } from "primereact/button";
+import { NextPageWithLayout } from "../../_app";
 
-const AppView: NextPageWithLayout = () => {
+const ScenesPage: NextPageWithLayout = () => {
   // get the id from the url
   const id = useRouter().query.id as string;
 
@@ -60,7 +58,7 @@ const AppView: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>KnackLens | App Overview</title>
+        <title>KnackLens | Scenes</title>
         <meta name="description" content="Easily view Knack application metadata" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* <link rel="icon" href="/favicon.ico" /> */}
@@ -69,30 +67,9 @@ const AppView: NextPageWithLayout = () => {
         {!loading && appData ? (
           <div className="card">
             <h2 id="app-name">{appData?.appName}</h2>
-            <p id="app-desc">{appData?.appDescription}</p>
+            <h3 id="app-desc">Scenes</h3>
 
-            <div id="app-links">
-              <Link href={`/${appData.id}/views`}>
-                <Button label="Views" />
-              </Link>
-              <Link href={`/${appData.id}/objects`}>
-                <Button label="Objects" />
-              </Link>
-              <Link href={`/${appData.id}/fields`}>
-                <Button label="Fields" />
-              </Link>
-              <Link href={`/${appData.id}/field-rules`}>
-                <Button label="Field Rules" />
-              </Link>
-              <Link href={`/${appData.id}/scenes`}>
-                <Button label="Scenes" />
-              </Link>
-              <Link href={`/${appData.id}/tasks`}>
-                <Button label="Tasks" />
-              </Link>
-            </div>
-
-            <Metadata appData={appData} />
+            <ScenesTable scenes={appData.scenes} />
           </div>
         ) : (
           <PageLoading />
@@ -102,8 +79,8 @@ const AppView: NextPageWithLayout = () => {
   );
 };
 
-AppView.getLayout = function getLayout(page: ReactElement) {
+ScenesPage.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
 
-export default AppView;
+export default ScenesPage;

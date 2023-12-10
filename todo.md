@@ -9,4 +9,9 @@
 - View a Task detail page
   - Ideally this page will contain all the metadata about a task that would normally be viewed in the builder
 - View a "View" detail page
--
+- See a tooltip for things like "field_XX", "object_XX", etc when hovering that shows me the name of that thing
+  - example, the identifier field on the Object detail page
+
+# Dev ToDos
+
+- See if the data fetching on page load can be a hook instead

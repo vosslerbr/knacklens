@@ -71,6 +71,14 @@ h2 {
   margin-bottom: 2rem;
 }
 
+#app-links {
+  width: max-content;
+  margin: auto;
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
 .detail-title {
   text-align: center;
   font-size: 1.5rem;

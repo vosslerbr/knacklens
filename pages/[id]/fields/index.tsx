@@ -1,13 +1,13 @@
 import Layout from "@/components/Layout";
 import PageLoading from "@/components/PageLoading";
 import { AppContext } from "@/components/Store";
+import FieldsTable from "@/components/tables/FieldsTable";
 import { AppDataContext } from "@/types";
-import axios from "axios";
+import getAppData from "@/utils/client/getAppData";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../../_app";
-import FieldsTable from "@/components/tables/FieldsTable";
 
 const FieldsPage: NextPageWithLayout = () => {
   // get the id from the url
@@ -23,7 +23,7 @@ const FieldsPage: NextPageWithLayout = () => {
       try {
         setLoading(true);
 
-        const { data } = await axios.get(`/api/app-data?id=${id}`);
+        const data = await getAppData(id);
 
         console.log("HELLO: ", data);
         setAppData(data);

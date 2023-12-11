@@ -1,19 +1,18 @@
 import Layout from "@/components/Layout";
 import PageLoading from "@/components/PageLoading";
-import axios from "axios";
+import { AppContext } from "@/components/Store";
+import YesNoTag from "@/components/YesNoTag";
+import { AppDataContext } from "@/types";
+import getAppData from "@/utils/client/getAppData";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { Column } from "primereact/column";
 import { DataTable, DataTableExpandedRows, DataTableValueArray } from "primereact/datatable";
+import { Panel } from "primereact/panel";
+import { TreeTable } from "primereact/treetable";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../../_app";
-import Link from "next/link";
-import { Panel } from "primereact/panel";
-import YesNoTag from "@/components/YesNoTag";
-import { AppContext } from "@/components/Store";
-import { AppDataContext } from "@/types";
-import { Row } from "primereact/row";
-import { TreeTable } from "primereact/treetable";
 
 const FieldDetail: NextPageWithLayout = () => {
   // get the id from the url
@@ -37,7 +36,7 @@ const FieldDetail: NextPageWithLayout = () => {
       try {
         setLoading(true);
 
-        const { data } = await axios.get(`/api/app-data?id=${appId}`);
+        const data = await getAppData(appId);
 
         console.log("fieldsByKey: ", data.fieldsByKey);
 

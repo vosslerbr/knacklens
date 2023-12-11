@@ -2,17 +2,8 @@ import { KnackAppData } from "@/types";
 import getObjectsAndFields from "@/utils/client/getAppData/getObjectsAndFields";
 import getScenesAndViews from "@/utils/client/getAppData/getScenesAndViews";
 import axios from "axios";
-import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // get app id from query params
-  const appId = req.query.id as string;
-
-  if (!appId) {
-    res.status(400).json({ error: "Missing app id" });
-    return;
-  }
-
+export default async function getAppData(appId: string) {
   // get app data from database
   const { data } = await axios.get(`https://api.knack.com/v1/applications/${appId}`);
 
@@ -55,11 +46,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   console.timeEnd("getAppData");
 
-  res.status(200).json(formattedAppData);
+  return formattedAppData;
 }
-
-export const config = {
-  api: {
-    responseLimit: "8mb",
-  },
-};

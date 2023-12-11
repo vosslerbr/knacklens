@@ -3,7 +3,7 @@ import PageLoading from "@/components/PageLoading";
 import { AppContext } from "@/components/Store";
 import YesNoTag from "@/components/YesNoTag";
 import { AppDataContext } from "@/types";
-import axios from "axios";
+import getAppData from "@/utils/client/getAppData";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -28,7 +28,7 @@ const TaskDetail: NextPageWithLayout = () => {
       try {
         setLoading(true);
 
-        const { data } = await axios.get(`/api/app-data?id=${appId}`);
+        const data = await getAppData(appId);
 
         console.log("tasksByKey: ", data.tasksByKey);
 

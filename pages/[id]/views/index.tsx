@@ -3,7 +3,7 @@ import PageLoading from "@/components/PageLoading";
 import { AppContext } from "@/components/Store";
 import ViewsTable from "@/components/tables/ViewsTable";
 import { AppDataContext } from "@/types";
-import axios from "axios";
+import getAppData from "@/utils/client/getAppData";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ReactElement, useContext, useEffect, useState } from "react";
@@ -23,7 +23,7 @@ const ViewsPage: NextPageWithLayout = () => {
       try {
         setLoading(true);
 
-        const { data } = await axios.get(`/api/app-data?id=${id}`);
+        const data = await getAppData(id);
 
         console.log("HELLO: ", data);
         setAppData(data);

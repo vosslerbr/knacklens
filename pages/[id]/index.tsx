@@ -3,13 +3,14 @@ import Metadata from "@/components/Metadata";
 import PageLoading from "@/components/PageLoading";
 import { AppContext } from "@/components/Store";
 import { AppDataContext } from "@/types";
-import axios from "axios";
+
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../_app";
 import { Button } from "primereact/button";
+import getAppData from "@/utils/client/getAppData";
 
 const AppView: NextPageWithLayout = () => {
   // get the id from the url
@@ -25,9 +26,8 @@ const AppView: NextPageWithLayout = () => {
       try {
         setLoading(true);
 
-        const { data } = await axios.get(`/api/app-data?id=${id}`);
+        const data = await getAppData(id);
 
-        console.log("HELLO: ", data);
         setAppData(data);
 
         // check for local storage

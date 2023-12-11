@@ -1,17 +1,17 @@
 import Layout from "@/components/Layout";
 import PageLoading from "@/components/PageLoading";
 import { AppContext } from "@/components/Store";
-import axios from "axios";
+import FieldsTable from "@/components/tables/FieldsTable";
+import { AppDataContext } from "@/types";
+import getAppData from "@/utils/client/getAppData";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
+import { Panel } from "primereact/panel";
+import { SelectButton } from "primereact/selectbutton";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../../_app";
-import { SelectButton } from "primereact/selectbutton";
-import { Panel } from "primereact/panel";
-import FieldsTable from "@/components/tables/FieldsTable";
-import { AppDataContext } from "@/types";
 
 const ObjectDetail: NextPageWithLayout = () => {
   // get the id from the url
@@ -36,7 +36,7 @@ const ObjectDetail: NextPageWithLayout = () => {
       try {
         setLoading(true);
 
-        const { data } = await axios.get(`/api/app-data?id=${appId}`);
+        const data = await getAppData(appId);
 
         console.log("HELLO: ", data);
 

@@ -1,13 +1,13 @@
 import Layout from "@/components/Layout";
 import PageLoading from "@/components/PageLoading";
 import { AppContext } from "@/components/Store";
+import FieldRulesTable from "@/components/tables/FieldRulesTable";
 import { AppDataContext } from "@/types";
-import axios from "axios";
+import getAppData from "@/utils/client/getAppData";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../../_app";
-import FieldRulesTable from "@/components/tables/FieldRulesTable";
 
 const FieldRulesPage: NextPageWithLayout = () => {
   // get the id from the url
@@ -23,7 +23,7 @@ const FieldRulesPage: NextPageWithLayout = () => {
       try {
         setLoading(true);
 
-        const { data } = await axios.get(`/api/app-data?id=${id}`);
+        const data = await getAppData(id);
 
         console.log("HELLO: ", data);
         setAppData(data);

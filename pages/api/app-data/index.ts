@@ -56,6 +56,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 export const config = {
   api: {
-    responseLimit: false,
+    responseLimit: "8mb",
   },
 };

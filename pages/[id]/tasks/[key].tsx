@@ -48,6 +48,8 @@ const TaskDetail: NextPageWithLayout = () => {
     }
   }, [appId, setAppData, appData]);
 
+  // TODO need to show what action the task is performing
+
   return (
     <>
       <Head>

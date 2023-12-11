@@ -66,8 +66,7 @@ const TasksPage: NextPageWithLayout = () => {
       <main>
         {!loading && appData ? (
           <div className="card">
-            <h2 id="app-name">{appData?.appName}</h2>
-            <h3 id="app-desc">Tasks</h3>
+            <h2 id="app-name">Tasks</h2>
 
             <TasksTable tasks={appData.tasks} />
           </div>

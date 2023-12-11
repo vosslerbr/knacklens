@@ -66,8 +66,7 @@ const FieldsPage: NextPageWithLayout = () => {
       <main>
         {!loading && appData ? (
           <div className="card">
-            <h2 id="app-name">{appData?.appName}</h2>
-            <h3 id="app-desc">Fields</h3>
+            <h2 id="app-name">Fields</h2>
 
             <FieldsTable fields={appData.fields} />
           </div>

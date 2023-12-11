@@ -30,6 +30,8 @@ body {
   padding: 2rem;
   border-radius: 10px;
   margin-bottom: 1rem;
+  max-width: 1800px;
+  margin: auto;
 }
 
 main {

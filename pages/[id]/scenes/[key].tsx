@@ -60,7 +60,7 @@ const SceneDetail: NextPageWithLayout = () => {
       <main>
         {!loading && appData ? (
           <div className="card">
-            <h2 id="app-name">{appData?.appName}</h2>
+            <h2 id="app-name">Scene</h2>
             <h2 className="detail-title purple">{appData.scenesByKey[sceneKey].name}</h2>
             <div className="grid metadata">
               <Panel header="Key">

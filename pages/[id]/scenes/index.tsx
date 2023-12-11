@@ -66,8 +66,7 @@ const ScenesPage: NextPageWithLayout = () => {
       <main>
         {!loading && appData ? (
           <div className="card">
-            <h2 id="app-name">{appData?.appName}</h2>
-            <h3 id="app-desc">Scenes</h3>
+            <h2 id="app-name">Scenes</h2>
 
             <ScenesTable scenes={appData.scenes} />
           </div>

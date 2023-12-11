@@ -66,8 +66,7 @@ const ObjectsPage: NextPageWithLayout = () => {
       <main>
         {!loading && appData ? (
           <div className="card">
-            <h2 id="app-name">{appData?.appName}</h2>
-            <h3 id="app-desc">Objects</h3>
+            <h2 id="app-name">Objects</h2>
 
             <ObjectsTable objects={appData.objects} />
           </div>

@@ -66,8 +66,8 @@ const ViewsPage: NextPageWithLayout = () => {
       <main>
         {!loading && appData ? (
           <div className="card">
-            <h2 id="app-name">{appData?.appName}</h2>
-            <h3 id="app-desc">Views</h3>
+            <h2 id="app-name">Views</h2>
+
 
             <ViewsTable views={appData.views} />
           </div>

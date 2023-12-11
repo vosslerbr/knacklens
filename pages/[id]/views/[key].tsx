@@ -95,7 +95,7 @@ const ViewDetail: NextPageWithLayout = () => {
       <main>
         {!loading && appData ? (
           <div className="card">
-            <h2 id="app-name">{appData?.appName}</h2>
+            <h2 id="app-name">View</h2>
             <h2 className="detail-title purple">{viewDetails.name}</h2>
 
             {renderDetails(viewDetails.type)}

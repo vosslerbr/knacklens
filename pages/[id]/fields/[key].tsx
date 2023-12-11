@@ -89,7 +89,7 @@ const FieldDetail: NextPageWithLayout = () => {
       <main>
         {!loading && appData ? (
           <div className="card">
-            <h2 id="app-name">{appData?.appName}</h2>
+            <h2 id="app-name">Field</h2>
             <h2 className="detail-title purple">{field.name}</h2>
             {/* <p className="detail-p">Field</p> */}
             <div className="grid metadata">

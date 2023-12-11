@@ -61,7 +61,7 @@ const TaskDetail: NextPageWithLayout = () => {
       <main>
         {!loading && appData ? (
           <div className="card">
-            <h2 id="app-name">{appData?.appName}</h2>
+            <h2 id="app-name">Task</h2>
             <h2 className="detail-title purple">{task.name}</h2>
             {/* <p className="detail-p">Field</p> */}
             <div className="grid metadata">

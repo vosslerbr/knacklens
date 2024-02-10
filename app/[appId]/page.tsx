@@ -1,5 +1,7 @@
 "use client";
 
+import Metadata from "@/components/Metadata";
+import PageLoading from "@/components/PageLoading";
 import { AppContext } from "@/components/Store";
 import { AppDataContext } from "@/types";
 import { getKnackAppData } from "@/utils/actions";
@@ -54,14 +56,12 @@ const AppOverview = ({ params }: { params: { appId: string } }) => {
     <>
       <main>
         {!loading && appData ? (
-          <div className="card">
-            <h2 id="app-name">Metadata</h2>
-            <p>ID: {appId}</p>
-            {/* <Metadata appData={appData} /> */}
+          <div>
+            <h2>Metadata</h2>
+            <Metadata appData={appData} />
           </div>
         ) : (
-          <p>loading..</p>
-          // <PageLoading />
+          <PageLoading />
         )}
       </main>
     </>

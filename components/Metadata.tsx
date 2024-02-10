@@ -1,41 +1,83 @@
 import { KnackAppData } from "@/types";
-import { Panel } from "primereact/panel";
 import YesNoTag from "./YesNoTag";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 const Metadata = ({ appData }: { appData: KnackAppData }) => {
   return (
-    <div className="grid metadata">
-      <Panel header="Slug">
-        <p>{appData.appSlug}</p>
-      </Panel>
-      <Panel header="Home Scene">
-        <p>{appData.homeSceneKey}</p>
-      </Panel>
-      <Panel header="Home Slug">
-        <p>{appData.homeSlug}</p>
-      </Panel>
-      <Panel header="Objects">
-        <p>{appData.objectCount.toLocaleString()}</p>
-      </Panel>
-      <Panel header="Total Records">
-        <p>{appData.recordCounts.total_entries.toLocaleString()}</p>
-      </Panel>
-      <Panel header="Scenes">
-        <p>{appData.sceneCount.toLocaleString()}</p>
-      </Panel>
-      <Panel header="API Limit">
-        <p>{appData.apiLimit.toLocaleString()} requests</p>
-      </Panel>
-      <Panel header="Timezone">
-        <p>{appData.appTimezone}</p>
-      </Panel>
-      <Panel header="E-commerce">
-        <YesNoTag value={appData.ecommerceEnabled} trueLabel="Enabled" falseLabel="Disabled" />
-      </Panel>
+    <div className="grid grid-cols-12 gap-4">
+      <Card className="col-span-4">
+        <CardHeader>
+          <CardTitle>Slug</CardTitle>
+        </CardHeader>
+        <CardContent>{appData.appSlug}</CardContent>
+      </Card>
 
-      <Panel header="Users">
-        <YesNoTag value={appData.usersEnabled} trueLabel="Enabled" falseLabel="Disabled" />
-      </Panel>
+      <Card className="col-span-4">
+        <CardHeader>
+          <CardTitle>Home Scene</CardTitle>
+        </CardHeader>
+        <CardContent>{appData.homeSceneKey}</CardContent>
+      </Card>
+
+      <Card className="col-span-4">
+        <CardHeader>
+          <CardTitle>Home Slug</CardTitle>
+        </CardHeader>
+        <CardContent>{appData.homeSlug}</CardContent>
+      </Card>
+
+      <Card className="col-span-4">
+        <CardHeader>
+          <CardTitle>Objects</CardTitle>
+        </CardHeader>
+        <CardContent>{appData.objectCount.toLocaleString()}</CardContent>
+      </Card>
+
+      <Card className="col-span-4">
+        <CardHeader>
+          <CardTitle>Total Records</CardTitle>
+        </CardHeader>
+        <CardContent>{appData.recordCounts.total_entries.toLocaleString()}</CardContent>
+      </Card>
+
+      <Card className="col-span-4">
+        <CardHeader>
+          <CardTitle>Scenes</CardTitle>
+        </CardHeader>
+        <CardContent>{appData.sceneCount.toLocaleString()}</CardContent>
+      </Card>
+
+      <Card className="col-span-4">
+        <CardHeader>
+          <CardTitle>API Limit</CardTitle>
+        </CardHeader>
+        <CardContent>{appData.apiLimit.toLocaleString()} requests</CardContent>
+      </Card>
+
+      <Card className="col-span-4">
+        <CardHeader>
+          <CardTitle>Timezone</CardTitle>
+        </CardHeader>
+        <CardContent>{appData.appTimezone}</CardContent>
+      </Card>
+
+      <Card className="col-span-4">
+        <CardHeader>
+          <CardTitle>E-commerce</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <YesNoTag value={appData.ecommerceEnabled} trueLabel="Enabled" falseLabel="Disabled" />
+        </CardContent>
+      </Card>
+
+      <Card className="col-span-4">
+        <CardHeader>
+          <CardTitle>Users</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <YesNoTag value={appData.usersEnabled} trueLabel="Enabled" falseLabel="Disabled" />
+        </CardContent>
+      </Card>
     </div>
   );
 };

@@ -1,10 +1,10 @@
-import { ProgressBar } from "primereact/progressbar";
+import { Loader2 } from "lucide-react";
 
 const PageLoading = () => {
   return (
-    <div className="card">
-      <h2 id="app-name">Loading app data...</h2>
-      <ProgressBar mode="indeterminate" style={{ height: "6px" }}></ProgressBar>
+    <div>
+      <h2>Loading app data...</h2>
+      <Loader2 className="w-12 h-12 text-slate-500 mx-auto animate-spin" />
     </div>
   );
 };

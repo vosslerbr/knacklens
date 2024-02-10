@@ -1,10 +1,10 @@
+import { AppDataContext } from "@/types";
 import { useRouter } from "next/router";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { InputText } from "primereact/inputtext";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../Store";
-import { AppDataContext } from "@/types";
+import { Input } from "../ui/input";
 
 const ObjectsTable = ({ objects }: { objects: any[] }) => {
   const [search, setSearch] = useState("");
@@ -34,7 +34,7 @@ const ObjectsTable = ({ objects }: { objects: any[] }) => {
   const header = (
     <div className="flex flex-wrap align-items-center justify-content-between gap-2">
       <span className="text-xl text-900 font-bold">{objects.length} Objects</span>
-      <InputText
+      <Input
         placeholder="Search by name or key"
         type="text"
         className="w-3"

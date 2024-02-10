@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* make all H2s have the same styles */
+h2 {
+  @apply text-4xl font-bold mb-4;
+}

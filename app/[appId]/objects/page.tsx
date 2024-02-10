@@ -1,15 +1,13 @@
-import Layout from "@/components/Layout";
 import PageLoading from "@/components/PageLoading";
 import { AppContext } from "@/components/Store";
 import ObjectsTable from "@/components/tables/ObjectsTable";
 import { AppDataContext } from "@/types";
-import getAppData from "@/utils/client/getAppData";
+import { getKnackAppData } from "@/utils/actions";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { ReactElement, useContext, useEffect, useState } from "react";
-import { NextPageWithLayout } from "../../_app";
+import { useContext, useEffect, useState } from "react";
 
-const ObjectsPage: NextPageWithLayout = () => {
+const ObjectsPage = () => {
   // get the id from the url
   const id = useRouter().query.id as string;
 
@@ -23,7 +21,7 @@ const ObjectsPage: NextPageWithLayout = () => {
       try {
         setLoading(true);
 
-        const data = await getAppData(id);
+        const data = await getKnackAppData(id);
 
         console.log("HELLO: ", data);
         setAppData(data);
@@ -76,10 +74,6 @@ const ObjectsPage: NextPageWithLayout = () => {
       </main>
     </>
   );
-};
-
-ObjectsPage.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
 };
 
 export default ObjectsPage;

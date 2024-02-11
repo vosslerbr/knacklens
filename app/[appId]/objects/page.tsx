@@ -1,14 +1,15 @@
+"use client";
+
+import { DataTable } from "@/components/DataTable";
 import PageLoading from "@/components/PageLoading";
 import { AppContext } from "@/components/Store";
-import ObjectsTable from "@/components/tables/ObjectsTable";
 import { AppDataContext } from "@/types";
 import { getKnackAppData } from "@/utils/actions";
-import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
+import { columns } from "./Columns";
 
-const ObjectsPage = () => {
-  // get the id from the url
-  const id = useRouter().query.id as string;
+const ObjectsPage = ({ params }: { params: { appId: string } }) => {
+  const { appId } = params;
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -20,9 +21,8 @@ const ObjectsPage = () => {
       try {
         setLoading(true);
 
-        const data = await getKnackAppData(id);
+        const data = await getKnackAppData(appId);
 
-        console.log("HELLO: ", data);
         setAppData(data);
 
         // check for local storage
@@ -47,24 +47,14 @@ const ObjectsPage = () => {
       }
     };
 
-    if ((id && !appData) || id !== appData?.id) {
+    if ((appId && !appData) || appId !== appData?.id) {
       handleSearch();
     }
-  }, [id, setAppData, appData]);
+  }, [appId, setAppData, appData]);
 
-  return (
-    <main>
-      {!loading && appData ? (
-        <div className="card">
-          <h2 id="app-name">Objects</h2>
+  if (loading || !appData) return <PageLoading />;
 
-          <ObjectsTable objects={appData.objects} />
-        </div>
-      ) : (
-        <PageLoading />
-      )}
-    </main>
-  );
+  return <DataTable columns={columns} data={appData.objects} />;
 };
 
 export default ObjectsPage;

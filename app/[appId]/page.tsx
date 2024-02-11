@@ -52,20 +52,11 @@ const AppOverview = ({ params }: { params: { appId: string } }) => {
     }
   }, [appId, setAppData, appData]);
 
-  return (
-    <>
-      <main>
-        {!loading && appData ? (
-          <div>
-            <h2>Metadata</h2>
-            <Metadata appData={appData} />
-          </div>
-        ) : (
-          <PageLoading />
-        )}
-      </main>
-    </>
-  );
+  if (loading || !appData) {
+    return <PageLoading />;
+  }
+
+  return <Metadata appData={appData} />;
 };
 
 export default AppOverview;

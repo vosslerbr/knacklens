@@ -35,3 +35,26 @@ export type AppDataContext = {
   appData: KnackAppData | null;
   setAppData: React.Dispatch<React.SetStateAction<any>>;
 };
+
+export interface KnackObject {
+  connections: {
+    inbound: any[];
+    outbound: any[];
+  };
+  conns: any[];
+  fields: any[];
+  identifier: string;
+  inflections: {
+    plural: string;
+    singular: string;
+  };
+  key: string;
+  name: string;
+  schemaChangeInProgress: boolean;
+  sort: { field: string; order: string };
+  status: string;
+  tasks: any[];
+  type: string;
+  user: boolean;
+  _id: string;
+}

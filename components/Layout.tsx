@@ -1,10 +1,11 @@
+import { AppDataContext } from "@/types";
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import { useRouter } from "next/router";
+import { Button } from "primereact/button";
 import { Menubar } from "primereact/menubar";
+import React, { useContext } from "react";
 import AppSearch from "./AppSearch";
 import { AppContext } from "./Store";
-import { AppDataContext } from "@/types";
-import { Button } from "primereact/button";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { appData } = useContext(AppContext) as AppDataContext;
@@ -14,6 +15,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <h1>KnackLens</h1>
     </Link>
   );
+
+  const router = useRouter();
+
+  const isActivePath = (path: string, matchExact = false) => {
+    if (matchExact) {
+      return router.pathname === path;
+    } else {
+      return router.pathname.includes(path);
+    }
+  };
 
   return (
     <>
@@ -33,22 +44,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           <div id="app-links">
             <Link href={`/${appData?.id}/`}>
-              <Button label="Metadata" />
+              <Button label="Metadata" text={!isActivePath("/[id]", true)} />
             </Link>
             <Link href={`/${appData?.id}/objects`}>
-              <Button label="Objects" />
+              <Button label="Objects" text={!isActivePath("/objects")} />
             </Link>
             <Link href={`/${appData?.id}/fields`}>
-              <Button label="Fields" />
+              <Button label="Fields" text={!isActivePath("/fields")} />
             </Link>
             <Link href={`/${appData?.id}/scenes`}>
-              <Button label="Scenes" />
+              <Button label="Scenes" text={!isActivePath("/scenes")} />
             </Link>
             <Link href={`/${appData?.id}/views`}>
-              <Button label="Views" />
+              <Button label="Views" text={!isActivePath("/views")} />
             </Link>
             <Link href={`/${appData?.id}/tasks`}>
-              <Button label="Tasks" />
+              <Button label="Tasks" text={!isActivePath("/tasks")} />
             </Link>
             {/* //TODO */}
             {/* <Link href={`/${appData.id}/field-rules`}>

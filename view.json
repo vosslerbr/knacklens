@@ -1,0 +1,164 @@
+{
+  "columns": [
+    {
+      "grouping": false,
+      "group_sort": "asc",
+      "ignore_edit": false,
+      "ignore_summary": false,
+      "conn_separator": "",
+      "conn_link": "",
+      "link_type": "text",
+      "link_text": "",
+      "link_field": "",
+      "link_design_active": false,
+      "icon": {
+        "icon": "",
+        "align": "left"
+      },
+      "img_gallery": "",
+      "width": {
+        "type": "default",
+        "units": "px",
+        "amount": "50"
+      },
+      "align": "left",
+      "rules": [],
+      "field": {
+        "key": "field_130"
+      },
+      "id": "field_130",
+      "type": "field",
+      "header": "List Collaborative Programs/Schemes the auditor is accredited to"
+    },
+    {
+      "grouping": false,
+      "group_sort": "asc",
+      "ignore_edit": false,
+      "ignore_summary": false,
+      "conn_separator": "",
+      "conn_link": "",
+      "link_type": "text",
+      "link_text": "",
+      "link_field": "",
+      "link_design_active": false,
+      "icon": {
+        "icon": "",
+        "align": "left"
+      },
+      "img_gallery": "",
+      "width": {
+        "type": "default",
+        "units": "px",
+        "amount": "50"
+      },
+      "align": "left",
+      "rules": [],
+      "field": {
+        "key": "field_131"
+      },
+      "id": "field_131",
+      "type": "field",
+      "header": "If \"Other\" Scheme chosen, please list here"
+    },
+    {
+      "grouping": false,
+      "group_sort": "asc",
+      "ignore_edit": false,
+      "ignore_summary": false,
+      "conn_separator": "",
+      "conn_link": "",
+      "link_type": "text",
+      "link_text": "",
+      "link_field": "",
+      "link_design_active": false,
+      "icon": {
+        "icon": "",
+        "align": "left"
+      },
+      "img_gallery": "",
+      "width": {
+        "type": "default",
+        "units": "px",
+        "amount": "50"
+      },
+      "align": "left",
+      "rules": [],
+      "field": {
+        "key": "field_252"
+      },
+      "id": "field_252",
+      "type": "field",
+      "header": "Date of Expiry of Accreditation"
+    },
+    {
+      "grouping": false,
+      "group_sort": "asc",
+      "ignore_edit": false,
+      "ignore_summary": false,
+      "conn_separator": "",
+      "conn_link": "",
+      "link_type": "text",
+      "link_text": "",
+      "link_field": "",
+      "link_design_active": false,
+      "icon": {
+        "icon": "",
+        "align": "left"
+      },
+      "img_gallery": "",
+      "width": {
+        "type": "default",
+        "units": "px",
+        "amount": "50"
+      },
+      "align": "left",
+      "rules": [],
+      "field": {
+        "key": "field_855"
+      },
+      "id": "field_855",
+      "type": "field",
+      "header": "Accreditation Received Date"
+    }
+  ],
+  "links": [],
+  "inputs": [],
+  "_id": "65b2ddeea4e83a00271d57ed",
+  "groups": [],
+  "no_data_text": "No data",
+  "totals": [],
+  "preset_filters": [],
+  "table_design_active": false,
+  "keyword_search_fields": "view",
+  "type": "table",
+  "reportType": null,
+  "name": "Accreditations\\Skills",
+  "source": {
+    "criteria": {
+      "match": "all",
+      "rules": [],
+      "groups": []
+    },
+    "limit": "",
+    "sort": [
+      {
+        "field": "field_240",
+        "order": "asc"
+      }
+    ],
+    "object": "object_13",
+    "authenticated_user": true,
+    "connection_key": "field_240",
+    "relationship_type": "foreign"
+  },
+  "title": "Auditors - Accreditations\\Skills",
+  "description": "",
+  "rows_per_page": "25",
+  "keyword_search": false,
+  "allow_exporting": false,
+  "allow_preset_filters": false,
+  "filter_type": "none",
+  "menu_filters": [],
+  "filter_fields": "view",
+  "key": "view_1896"
+}

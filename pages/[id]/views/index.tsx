@@ -1,59 +1,17 @@
 import Layout from "@/components/Layout";
 import PageLoading from "@/components/PageLoading";
-import { AppContext } from "@/components/Store";
 import ViewsTable from "@/components/tables/ViewsTable";
-import { AppDataContext } from "@/types";
-import getAppData from "@/utils/client/getAppData";
+import useKnackAppData from "@/utils/hooks/useKnackAppData";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { ReactElement, useContext, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import { NextPageWithLayout } from "../../_app";
 
 const ViewsPage: NextPageWithLayout = () => {
   // get the id from the url
   const id = useRouter().query.id as string;
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-
-  const { appData, setAppData } = useContext(AppContext) as AppDataContext;
-
-  useEffect(() => {
-    const handleSearch = async () => {
-      try {
-        setLoading(true);
-
-        const data = await getAppData(id);
-
-        console.log("HELLO: ", data);
-        setAppData(data);
-
-        // check for local storage
-        const localData = localStorage.getItem("knackLens");
-
-        const localDataObj = localData ? JSON.parse(localData) : [];
-
-        const existingApp = localDataObj.find((app: any) => app.id === data?.id);
-
-        if (!existingApp) {
-          // add to local storage
-          localDataObj.push({ id: data?.id, appName: data?.appName });
-
-          console.log("localDataObj: ", localDataObj);
-
-          localStorage.setItem("knackLens", JSON.stringify(localDataObj));
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if ((id && !appData) || id !== appData?.id) {
-      handleSearch();
-    }
-  }, [id, setAppData, appData]);
+  const { appData, loading } = useKnackAppData(id);
 
   return (
     <>
@@ -67,7 +25,6 @@ const ViewsPage: NextPageWithLayout = () => {
         {!loading && appData ? (
           <div className="card">
             <h2 id="app-name">Views</h2>
-
 
             <ViewsTable views={appData.views} />
           </div>
